@@ -1,9 +1,9 @@
 <script>
-  import { counterCount } from '../utils/stores.js';
+  import { candidateCount } from '../utils/stores.js';
   import Button from './Button.svelte';
 
   function decrement() {
-    counterCount.update((n) => n - 1);
+    candidateCount.update((n) => n - 1);
   }
 </script>
 

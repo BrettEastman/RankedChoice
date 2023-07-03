@@ -1,9 +1,9 @@
 <script>
-  import { counterCount } from '../utils/stores.js';
+  import { candidateCount } from '../utils/stores.js';
   import Button from './Button.svelte';
 
   function reset() {
-    counterCount.set(0);
+    candidateCount.set(0);
   }
 </script>
 
