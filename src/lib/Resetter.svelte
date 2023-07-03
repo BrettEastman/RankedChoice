@@ -7,4 +7,4 @@
   }
 </script>
 
-<Button onClick={reset}> Reset </Button>
+<Button onClick={reset} color="bg-red-500"> Reset </Button>
