@@ -71,20 +71,21 @@
 </main>
 
 <style>
-	/* progress {
-		display: block;
-		width: 100%;
-	} */
   progress {
-      display: flex;
-      width: 300px;
-      height: 25px;
-      border: 2px solid gray;
-      }
-      progress::-webkit-progress-bar {
-         background-color: rgb(69, 66, 152);
-      }
-      progress::-webkit-progress-value {
-         background-color: rgb(239, 209, 209);
-      }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 2rem;
+    width: 100%;
+    height: 25px;
+    border: 2px solid rgb(18, 1, 1);
+    }
+    progress::-webkit-progress-bar {
+        background-color: rgb(252, 251, 251);
+        border-radius: 2rem;
+    }
+    progress::-webkit-progress-value {
+        background-color: rgb(119, 126, 167);
+        border-radius: 2rem;
+    }
 </style>
