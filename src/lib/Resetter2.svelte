@@ -1,5 +1,5 @@
 <script>
-  import { voterCount } from '../utils/stores.js';
+  import { voterCount } from '../utils/stores';
   import Button from './Button.svelte';
 
   function reset() {
