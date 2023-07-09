@@ -1,6 +1,7 @@
 <script lang="ts">
   import TailwindCss from './TailwindCSS.svelte';
   import Button from './lib/Button.svelte';
+  import Frame from './lib/Frame.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -82,6 +83,36 @@
   <div class="mb-24">
     <label for="voterprog">Voter total out of 17: {Math.floor(($voterCount / 17) * 100)}%</label>
     <progress id="voterprog" max="17" value={$voterCount}></progress>
+  </div>
+
+  <div class="mb-12">
+    <Typewriter />
+  </div>
+
+  <div class="grid gap-2 pb-4">
+    <p>
+        The parent element of the Frame component has its width set to <span
+            class="font-bold">{`600px`}</span
+        >
+        and its height set to <span class="font-bold">{`400px`}</span>.
+    </p>
+    <p>
+        The parent element also has a dashed border to make it easier to see,
+        and uses the Tailwind "overflow-hidden" class to hide any content that
+        exceeds its boundaries.
+    </p>
+  </div>
+  <div
+      style={`width: 600px; height: 400px;`}
+      class="box-content overflow-hidden border-2 border-dashed border-black"
+  >
+      <Frame ratio="video" position="center">
+          <img
+              slot="frame-content"
+              src="https://source.unsplash.com/random/640x480"
+              alt="Abstract art with some added notes for testing our Frame component"
+          />
+      </Frame>
   </div>
 </main>
 
