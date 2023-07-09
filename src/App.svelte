@@ -7,9 +7,11 @@
   import Incrementer2 from './lib/Incrementer2.svelte';
   import Resetter from './lib/Resetter.svelte';
   import Resetter2 from './lib/Resetter2.svelte';
+  import Frame from './lib/Frame.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+  import Typewriter from './lib/Typewriter.svelte';
 
 	const progress = tweened(0, {
 		duration: 400,
@@ -56,17 +58,28 @@
     <progress id="voterprog" max="17" value={$voterCount}></progress>
   </div>
 
-  <progress value={$progress} />
+  <div>
+    <progress value={$progress} />
+    <button on:click={() => progress.set(0)}> 0% </button>
+    <button on:click={() => progress.set(0.25)}> 25% </button>
+    <button on:click={() => progress.set(0.5)}> 50% </button>
+    <button on:click={() => progress.set(0.75)}> 75% </button>
+    <button on:click={() => progress.set(1)}> 100% </button>
+    <button on:click={() => progress.update(n => n + 0.1)}> +10% </button>
+    <button on:click={() => progress.update(n => n - 0.1)}> -10% </button>
+  </div>
 
-  <button on:click={() => progress.set(0)}> 0% </button>
+  <Typewriter />
 
-  <button on:click={() => progress.set(0.25)}> 25% </button>
+  <div>
+    <Frame ratio="square" position="center">
+      <img src="https://source.unsplash.com/random/640x480" alt="" />
+    </Frame>
 
-  <button on:click={() => progress.set(0.5)}> 50% </button>
-
-  <button on:click={() => progress.set(0.75)}> 75% </button>
-
-  <button on:click={() => progress.set(1)}> 100% </button>
+    <Frame ratio="square" position="center">
+      <img src="https://source.unsplash.com/random/640x480" alt="" />
+    </Frame>
+  </div>
 
 </main>
 
