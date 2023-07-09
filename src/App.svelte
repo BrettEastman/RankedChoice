@@ -1,22 +1,48 @@
 <script lang="ts">
-  import { candidateCount, voterCount } from './utils/stores';
   import TailwindCss from './TailwindCSS.svelte';
-  import Decrementer from './lib/Decrementer.svelte';
-  import Decrementer2 from './lib/Decrementer2.svelte';
-  import Incrementer from './lib/Incrementer.svelte';
-  import Incrementer2 from './lib/Incrementer2.svelte';
-  import Resetter from './lib/Resetter.svelte';
-  import Resetter2 from './lib/Resetter2.svelte';
-  import Frame from './lib/Frame.svelte';
+  import Button from './lib/Button.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
   import Typewriter from './lib/Typewriter.svelte';
 
-	const progress = tweened(0, {
-		duration: 400,
-		easing: cubicOut
-	});
+  const candidateCount = tweened(0,
+    {
+      duration: 400,
+      easing: cubicOut
+    }
+  );
+
+  const voterCount = tweened(0,
+    {
+      duration: 400,
+      easing: cubicOut
+    }
+  );
+
+  function incrementCandidate() {
+    candidateCount.update((n) => n + 1);
+  }
+
+  function decrementCandidate() {
+    candidateCount.update((n) => n - 1);
+  }
+
+  function resetCandidate() {
+    candidateCount.set(0);
+  }
+
+  function incrementVoter() {
+    voterCount.update((n) => n + 1);
+  }
+
+  function decrementVoter() {
+    voterCount.update((n) => n - 1);
+  }
+
+  function resetVoter() {
+    voterCount.set(0);
+  }
 </script>
 
 <TailwindCss />
@@ -28,12 +54,12 @@
     How many candidates?
   </p>
 
-  <h1 class="text-2xl font-bold">Candidates: {$candidateCount}</h1>
+  <h1 class="text-2xl font-bold">Candidates: {Math.floor($candidateCount)}</h1>
 
   <div class="text-xl mt-2.5 mb-4">
-    <Incrementer />
-    <Decrementer />
-    <Resetter />
+    <Button onClick={incrementCandidate}> + </Button>
+    <Button onClick={decrementCandidate}> - </Button>
+    <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
   </div>
 
   <div class="mb-24">
@@ -45,42 +71,18 @@
     How many voters?
   </p>
 
-  <h1 class="text-2xl font-bold">Voters: {$voterCount}</h1>
+  <h1 class="text-2xl font-bold">Voters: {Math.ceil($voterCount)}</h1>
 
   <div class="text-xl mt-2.5 mb-4 ">
-    <Incrementer2 />
-    <Decrementer2 />
-    <Resetter2 />
+    <Button onClick={incrementVoter}> + </Button>
+    <Button onClick={decrementVoter}> - </Button>
+    <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
   </div>
 
   <div class="mb-24">
     <label for="voterprog">Voter total out of 17: {Math.floor(($voterCount / 17) * 100)}%</label>
     <progress id="voterprog" max="17" value={$voterCount}></progress>
   </div>
-
-  <div>
-    <progress value={$progress} />
-    <button on:click={() => progress.set(0)}> 0% </button>
-    <button on:click={() => progress.set(0.25)}> 25% </button>
-    <button on:click={() => progress.set(0.5)}> 50% </button>
-    <button on:click={() => progress.set(0.75)}> 75% </button>
-    <button on:click={() => progress.set(1)}> 100% </button>
-    <button on:click={() => progress.update(n => n + 0.1)}> +10% </button>
-    <button on:click={() => progress.update(n => n - 0.1)}> -10% </button>
-  </div>
-
-  <Typewriter />
-
-  <div>
-    <Frame ratio="square" position="center">
-      <img src="https://source.unsplash.com/random/640x480" alt="" />
-    </Frame>
-
-    <Frame ratio="square" position="center">
-      <img src="https://source.unsplash.com/random/640x480" alt="" />
-    </Frame>
-  </div>
-
 </main>
 
 <style>
