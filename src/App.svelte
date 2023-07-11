@@ -1,6 +1,8 @@
 <script lang="ts">
   import TailwindCss from './TailwindCSS.svelte';
   import Button from './lib/Button.svelte';
+  import Inline from './lib/Inline.svelte';
+  import Stack from './lib/Stack.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -47,41 +49,47 @@
 <TailwindCss />
 
 <main class="max-w-4xl p-4 m-auto text-center">
-  <h1 class="text-3xl font-bold mt-2.5 mb-12 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
+  <Stack gutter="gap-4">
+    <h1 class="text-3xl font-bold mt-2.5 mb-12 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
 
-  <p class="text-3xl mt-2.5 mb-4">
-    How many candidates?
-  </p>
+    <p class="text-3xl mt-2.5 mb-4">
+      How many candidates?
+    </p>
 
-  <h1 class="text-2xl font-bold">Candidates: {Math.floor($candidateCount)}</h1>
+    <h1 class="text-2xl font-bold">Candidates: {Math.floor($candidateCount)}</h1>
 
-  <div class="text-xl mt-2.5 mb-4">
-    <Button onClick={incrementCandidate}> + </Button>
-    <Button onClick={decrementCandidate}> - </Button>
-    <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
-  </div>
+    <div class="text-xl mt-2.5 mb-4">
+      <Inline gutter="gap-4" justify="justify-center">
+        <Button onClick={incrementCandidate}> + </Button>
+        <Button onClick={decrementCandidate}> - </Button>
+        <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
+      </Inline>
+    </div>
 
-  <div class="mb-24">
-    <label for="candidateProg">Candidate total out of 7: {Math.floor(($candidateCount / 7) * 100)}%</label>
-    <progress id="candidateProg" max="7" value={$candidateCount}></progress>
-  </div>
+    <div class="mb-24">
+      <label for="candidateProg">Candidate total out of 7: {Math.floor(($candidateCount / 7) * 100)}%</label>
+      <progress id="candidateProg" max="7" value={$candidateCount}></progress>
+    </div>
 
-  <p class="text-3xl mt-2.5 mb-4">
-    How many voters?
-  </p>
+    <p class="text-3xl mt-2.5 mb-4">
+      How many voters?
+    </p>
 
-  <h1 class="text-2xl font-bold">Voters: {Math.ceil($voterCount)}</h1>
+    <h1 class="text-2xl font-bold">Voters: {Math.ceil($voterCount)}</h1>
 
-  <div class="text-xl mt-2.5 mb-4 ">
-    <Button onClick={incrementVoter}> + </Button>
-    <Button onClick={decrementVoter}> - </Button>
-    <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
-  </div>
+    <div class="text-xl mt-2.5 mb-4 ">
+      <Inline gutter="gap-4" justify="justify-center">
+        <Button onClick={incrementVoter}> + </Button>
+        <Button onClick={decrementVoter}> - </Button>
+        <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
+      </Inline>
+    </div>
 
-  <div class="mb-24">
-    <label for="voterprog">Voter total out of 17: {Math.floor(($voterCount / 17) * 100)}%</label>
-    <progress id="voterprog" max="17" value={$voterCount}></progress>
-  </div>
+    <div class="mb-24">
+      <label for="voterprog">Voter total out of 17: {Math.floor(($voterCount / 17) * 100)}%</label>
+      <progress id="voterprog" max="17" value={$voterCount}></progress>
+    </div>
+  </Stack>
 </main>
 
 <style>
