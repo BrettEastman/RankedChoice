@@ -67,8 +67,8 @@
     </div>
 
     <div class="mb-24">
-      <label for="candidateProg">Candidate total out of 7: {Math.floor(($candidateCount / 7) * 100)}%</label>
-      <progress id="candidateProg" max="7" value={$candidateCount}></progress>
+      <label for="candidateProg">Candidate total out of 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
+      <progress id="candidateProg" max="5" value={$candidateCount}></progress>
     </div>
 
     <p class="text-3xl mt-2.5 mb-4">
@@ -86,8 +86,8 @@
     </div>
 
     <div class="mb-24">
-      <label for="voterprog">Voter total out of 17: {Math.floor(($voterCount / 17) * 100)}%</label>
-      <progress id="voterprog" max="17" value={$voterCount}></progress>
+      <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
+      <progress id="voterprog" max="20" value={$voterCount}></progress>
     </div>
   </Stack>
 </main>
