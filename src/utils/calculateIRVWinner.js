@@ -1,11 +1,8 @@
 function calculateIRVWinner(candidateData) {
-  // Create a deep copy of the candidateData array to avoid modifying the original data
   const data = JSON.parse(JSON.stringify(candidateData));
 
-  // Calculate the total number of votes in the first round
   const totalVotes = data.reduce((sum, candidate) => sum + candidate.votes[0], 0);
 
-  // Helper function to find the candidate with the lowest votes in a given round
   function findLowestCandidateIndex(round) {
     let lowestIndex = -1;
     let lowestVotes = Number.MAX_SAFE_INTEGER;
@@ -20,23 +17,25 @@ function calculateIRVWinner(candidateData) {
     return lowestIndex;
   }
 
-  // Helper function to check if a candidate has a majority in a given round
-  function hasMajority(candidateIndex, round) {
-    return data[candidateIndex].votes[round] / totalVotes > 0.5;
-  }
-
   let round = 0;
 
   while (data.length > 1) {
+    let highestCount = 0;
+    let majorityWinner = '';
 
-    // Check for majority in the current round
-    for (let i = 0; i < data.length; i++) {
-      if (hasMajority(i, round)) {
-        return data[i].name; // We have a winner
+    for (let candidateIndex = 0; candidateIndex < data.length; candidateIndex++) {
+      let currentTally = data[candidateIndex].votes[round];
+      let hasMajority = currentTally / totalVotes > 0.5;
+      if (hasMajority && currentTally > highestCount) {
+        highestCount = currentTally;
+        majorityWinner = data[candidateIndex].name;
       }
     }
 
-    // Find the candidate with the lowest votes in the current round
+    if (majorityWinner !== '') {
+      return majorityWinner;
+    }
+
     const lowestIndex = findLowestCandidateIndex(round);
 
     // Eliminate the candidate with the lowest votes in the current round
@@ -44,9 +43,10 @@ function calculateIRVWinner(candidateData) {
 
     // Redistribute votes to remaining candidates
     data.forEach((candidate) => {
-      for (let i = round + 1; i < candidate.votes.length; i++) {
-        candidate.votes[i] += candidate.votes[round];
-      }
+      candidate.votes[round + 1] += candidate.votes[round];
+      // for (let i = round + 1; i < candidate.votes.length; i++) {
+      //   candidate.votes[i] += candidate.votes[round];
+      // }
     });
 
     // Move to the next round
@@ -59,11 +59,17 @@ function calculateIRVWinner(candidateData) {
 
 // Example usage:
 const candidateData = [
-  { name: 'orange', votes: [3, 5, 12] },
-  { name: 'green', votes: [5, 7, 8] },
-  { name: 'purple', votes: [7, 8, 5] },
   { name: 'blue', votes: [5, 8, 7] },
+  { name: 'purple', votes: [7, 8, 5] },
+  { name: 'green', votes: [5, 7, 8] },
+  { name: 'orange', votes: [3, 5, 12] },
 ];
 
-const winner = calculateIRVWinner(candidateData);
+const candidateData2 = [
+  { name: 'Mix', votes: [2, 0, 3] },
+  { name: 'Tame Impala', votes: [1, 3, 1] },
+  { name: 'Stereo Lab', votes: [2, 2, 1] },
+];
+
+const winner = calculateIRVWinner(candidateData2);
 console.log(`The winner is: ${winner}`);
