@@ -38,15 +38,11 @@ function calculateIRVWinner(candidateData) {
 
     const lowestIndex = findLowestCandidateIndex(round);
 
-    // Eliminate the candidate with the lowest votes in the current round
     data.splice(lowestIndex, 1);
 
     // Redistribute votes to remaining candidates
     data.forEach((candidate) => {
       candidate.votes[round + 1] += candidate.votes[round];
-      // for (let i = round + 1; i < candidate.votes.length; i++) {
-      //   candidate.votes[i] += candidate.votes[round];
-      // }
     });
 
     // Move to the next round
@@ -57,7 +53,7 @@ function calculateIRVWinner(candidateData) {
   return data[0].name;
 }
 
-// Example usage:
+// Example data:
 const candidateData = [
   { name: 'blue', votes: [5, 8, 7] },
   { name: 'purple', votes: [7, 8, 5] },
