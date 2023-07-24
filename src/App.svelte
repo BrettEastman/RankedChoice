@@ -6,6 +6,7 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+  import Form from './lib/Form.svelte';
 
   const candidateCount = tweened(0,
     {
@@ -89,6 +90,8 @@
       <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
       <progress id="voterprog" max="20" value={$voterCount}></progress>
     </div>
+
+    <Form />
   </Stack>
 </main>
 

@@ -1,6 +1,5 @@
 <script>
   import FormInput from "./FormInput.svelte";
-  import Button from "./Button.svelte";
   import Inline from "./Inline.svelte";
 
   const initialFormValues = {

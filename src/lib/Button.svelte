@@ -8,7 +8,7 @@
 
 <!--
 @component
-Button is a styled button component that can be used to create a button with a background color and a shadow.
+Button is a styled button component that can be used to create a button with a background color and a shadow. Adapted from component library by Brett Eastman and Alex Nitta for Woodshed.
 
 | Prop    | Type     | Options                     | Default       | Description                                  |
 | ------- | -------- | --------------------------- | ------------- | -------------------------------------------- |
@@ -17,7 +17,7 @@ Button is a styled button component that can be used to create a button with a b
 -->
 
 <button
-  class="rounded-lg px-5 py-2 tracking-wide text-white shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] {color} active:bg-blue-700"
+  class="rounded-full px-5 py-2 tracking-wide text-white shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] {color} active:bg-blue-700"
   on:click={onClick}
 >
   <slot />
