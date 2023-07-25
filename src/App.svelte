@@ -7,6 +7,7 @@
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
   import Form from './lib/Form.svelte';
+  import VotingForm from './lib/VotingForm.svelte';
 
   const candidateCount = tweened(0,
     {
@@ -92,6 +93,7 @@
     </div>
 
     <Form />
+    <VotingForm />
   </Stack>
 </main>
 

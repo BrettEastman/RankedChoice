@@ -1,6 +1,7 @@
 <script>
   import FormInput from "./FormInput.svelte";
   import Inline from "./Inline.svelte";
+  import { candidateData } from "../utils/stores";
 
   const initialFormValues = {
     candidate1: '',
