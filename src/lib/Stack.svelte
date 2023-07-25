@@ -4,7 +4,7 @@
 
 <!--
 @component
-Stack is a layout component designed to 'stack' items on top of each other while maintaining a consistent gutter between each item. It was originally developed for Woodshed.
+Stack is a layout component designed to 'stack' items on top of each other while maintaining a consistent gutter between each item. Originally developed by Brett Eastman and Alex Nitta for Woodshed.
 
 | Prop   | Type   | Options                             | Default | Description                           |
 | ------ | ------ | ----------------------------------- | ------- | ------------------------------------- |
