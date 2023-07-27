@@ -1,6 +1,6 @@
 <script context="module">
   // Modification of a function originally authored by Alex Nitta and Brett Eastman for Woodshed
-  import spacing from './spacing.js';
+  import spacing from '../utils/spacing.js';
 
   export function getSpacing(num) {
     num = num.toString();
