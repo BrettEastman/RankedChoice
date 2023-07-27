@@ -92,7 +92,7 @@
       <progress id="voterprog" max="20" value={$voterCount}></progress>
     </div>
 
-    <Form />
+    <!-- <Form /> -->
     <VotingForm />
   </Stack>
 </main>

@@ -1,9 +1,10 @@
 <script>
   import { _cx } from '../scripts/_cx.svelte';
-  import { getSpacing } from '../utils/getSpacing.svelte';
+  import { getSpacing } from '../scripts/getSpacing.svelte';
 
   export let switchAt = '';
   export let gutter = 'gap-4';
+  export let height = '';
   export let justify = 'justify-start';
   export let align = 'items-start';
   export let minItemWidth = 24;
@@ -28,8 +29,9 @@
       'flex',
       switchAtClass,
       gutter,
+      height,
       justify,
-      align
+      align,
   );
 </script>
 
@@ -41,6 +43,7 @@ Inline is a layout component that is essentially a `<div`> with `display: flex;`
 | ------------ | ------ | ------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------ |
 | switchAt     | string | Tailwind class name - must be one of '2xsm', 'xsm', 'sm', 'md', 'lg', 'xl', or '2xl'              | -               | When the screen is below this width, the items will be displayed in a column with `flex-direction: 'column'` |
 | gutter       | string | Tailwind class name such as 'gap-4'                                                               | 'gap-4'         | Used to set the spacing between items                                                                        |
+| height       | string | Tailwind class name such as 'h-24'                                                                | -               | Used to set the height of the parent                                                                         |
 | justify      | string | Tailwind class name - must be one of 'justify-center' 'justify-end', or 'justify-start'           | 'justify-start' | Used to justify the items                                                                                    |
 | align        | string | Tailwind class name - must be one of 'items-center' 'items-end' 'items-start', or 'items-stretch' | 'items-start'   | Used to align the items                                                                                      |
 | minItemWidth | number | Single number                                                                                     | 24              | Used to set a minimum width for each of the children                                                         |
