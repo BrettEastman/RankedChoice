@@ -6,8 +6,24 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+  import { candidateCount1, voterCount1 } from './utils/stores';
   import Form from './lib/Form.svelte';
+  import FormInput from './lib/FormInput.svelte';
   import VotingForm from './lib/VotingForm.svelte';
+  import DynamicVotingForm from './lib/DynamicVotingForm.svelte';
+
+  // Define reactive variables for candidates and voters
+  // let candidateCount = 3;
+  // let voterCount = 5;
+
+  // Function to handle form submission
+  // function handleSubmit(event) {
+  //   event.preventDefault();
+  //   // Process the form data here
+  //   // For example, you can access the form data using event.target
+  //   // and handle the voting data accordingly
+  //   console.log(event.target);
+  // }
 
   const candidateCount = tweened(0,
     {
@@ -91,9 +107,7 @@
       <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
       <progress id="voterprog" max="20" value={$voterCount}></progress>
     </div>
-
-    <!-- <Form /> -->
-    <VotingForm />
+    <DynamicVotingForm />
   </Stack>
 </main>
 
