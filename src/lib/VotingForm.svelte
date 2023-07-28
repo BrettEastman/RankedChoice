@@ -1,6 +1,7 @@
 <script>
   import Inline from './Inline.svelte';
   import PadBox from './PadBox.svelte';
+
   // Define the candidates and voters
   const candidates = ['Candidate 1', 'Candidate 2', 'Candidate 3'];
   const voters = ['Voter 1', 'Voter 2', 'Voter 3', 'Voter 4', 'Voter 5'];
