@@ -1,4 +1,8 @@
 <script lang="ts">
+  // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
+  // input each of the candate names to each form input, then press submit to trigger the handleSubmit function
+  // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and a blank array for votes
+  // when adding a new candidate, add object with candidate name and blank votes array
   import TailwindCss from './TailwindCSS.svelte';
   import Button from './lib/Button.svelte';
   import Inline from './lib/Inline.svelte';
@@ -6,24 +10,30 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1 } from './utils/stores';
-  import Form from './lib/Form.svelte';
-  import FormInput from './lib/FormInput.svelte';
-  import VotingForm from './lib/VotingForm.svelte';
-  import DynamicVotingForm from './lib/DynamicVotingForm.svelte';
+  import { candidateCount1, voterCount1, candidateData } from './utils/stores';
 
-  // Define reactive variables for candidates and voters
-  // let candidateCount = 3;
-  // let voterCount = 5;
+  let candidates = [];
 
-  // Function to handle form submission
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   // Process the form data here
-  //   // For example, you can access the form data using event.target
-  //   // and handle the voting data accordingly
-  //   console.log(event.target);
-  // }
+  const handleCandidateSubmit = (e) => {
+    const formData = new FormData(e.target);
+    for (let field of formData) {
+      const [key, value] = field;
+      candidates.push(value);
+    }
+    console.log('candidates:', candidates);
+  };
+
+  const handleVoterSubmit = (e) => {
+    const formData = new FormData(e.target);
+    const data = {};
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+      // candidateData.update((n) => [...n, { name: value, votes: [] }]);
+      $candidateData.push({ name: value, votes: [] });
+    }
+    console.log('candidateData:', candidateData);
+  };
 
   const candidateCount = tweened(0,
     {
@@ -41,26 +51,32 @@
 
   function incrementCandidate() {
     candidateCount.update((n) => n + 1);
+    $candidateCount1 += 1;
   }
 
   function decrementCandidate() {
     candidateCount.update((n) => n - 1);
+    $candidateCount1 -= 1;
   }
 
   function resetCandidate() {
     candidateCount.set(0);
+    $candidateCount1 = 0;
   }
 
   function incrementVoter() {
     voterCount.update((n) => n + 1);
+    $voterCount1 += 1;
   }
 
   function decrementVoter() {
     voterCount.update((n) => n - 1);
+    $voterCount1 -= 1;
   }
 
   function resetVoter() {
     voterCount.set(0);
+    $voterCount1 = 0;
   }
 </script>
 
@@ -84,9 +100,25 @@
       </Inline>
     </div>
 
-    <div class="mb-24">
+    <div class="mb-4">
       <label for="candidateProg">Candidate total out of 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
       <progress id="candidateProg" max="5" value={$candidateCount}></progress>
+    </div>
+
+    <div class="mb-24">
+      <form on:submit|preventDefault={handleCandidateSubmit}>
+        <!-- Dynamic rendering of candidate inputs -->
+        {#each Array($candidateCount1) as _, candidateIndex}
+          <div>
+            <label>
+              Candidate {candidateIndex + 1}:
+              <input type="text" id="text" name={`candidate${candidateIndex}`} value="" />
+            </label>
+          </div>
+        {/each}
+
+        <button type="submit">Submit Candidate Names</button>
+      </form>
     </div>
 
     <p class="text-3xl mt-2.5 mb-4">
@@ -103,11 +135,26 @@
       </Inline>
     </div>
 
-    <div class="mb-24">
+    <div class="mb-4">
       <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
       <progress id="voterprog" max="20" value={$voterCount}></progress>
     </div>
-    <DynamicVotingForm />
+
+    <div class="mb-24">
+      <form on:submit|preventDefault={handleVoterSubmit}>
+        <!-- Dynamic rendering of voter inputs -->
+        {#each Array($voterCount1) as _, voterIndex}
+          <div>
+            <label>
+              Voter {voterIndex + 1}:
+              <input type="text" id="text" name={`voter${voterIndex}`} value="" />
+            </label>
+          </div>
+        {/each}
+
+        <button type="submit">Submit Voter Names</button>
+      </form>
+    </div>
   </Stack>
 </main>
 
