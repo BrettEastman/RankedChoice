@@ -10,31 +10,30 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1 } from './utils/stores';
-  // import Form from './lib/Form.svelte';
-  // import FormInput from './lib/FormInput.svelte';
-  // import VotingForm from './lib/VotingForm.svelte';
-  // import DynamicVotingForm from './lib/CandidateNumForm.svelte';
-  // import CandidateNumForm from './lib/CandidateNumForm.svelte';
-  // import VoterNumForm from './lib/VoterNumForm.svelte';
+  import { candidateCount1, voterCount1, candidateData } from './utils/stores';
 
+  let candidates = [];
 
-  // Function to handle form submission
-  function handleCandidateSubmit(event) {
-    event.preventDefault();
-    // Process the form data here
-    // For example, you can access the form data using event.target
-    // and handle the voting data accordingly
-    console.log('event.target: ', event.target);
-  }
+  const handleCandidateSubmit = (e) => {
+    const formData = new FormData(e.target);
+    for (let field of formData) {
+      const [key, value] = field;
+      candidates.push(value);
+    }
+    console.log('candidates:', candidates);
+  };
 
-  function handleVoterSubmit(event) {
-    event.preventDefault();
-    // Process the form data here
-    // For example, you can access the form data using event.target
-    // and handle the voting data accordingly
-    console.log('event.target: ', event.target);
-  }
+  const handleVoterSubmit = (e) => {
+    const formData = new FormData(e.target);
+    const data = {};
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+      // candidateData.update((n) => [...n, { name: value, votes: [] }]);
+      $candidateData.push({ name: value, votes: [] });
+    }
+    console.log('candidateData:', candidateData);
+  };
 
   const candidateCount = tweened(0,
     {
@@ -107,13 +106,13 @@
     </div>
 
     <div class="mb-24">
-      <form on:submit={handleCandidateSubmit}>
+      <form on:submit|preventDefault={handleCandidateSubmit}>
         <!-- Dynamic rendering of candidate inputs -->
         {#each Array($candidateCount1) as _, candidateIndex}
           <div>
             <label>
               Candidate {candidateIndex + 1}:
-              <input type="text" name={`candidate${candidateIndex}`} required />
+              <input type="text" id="text" name={`candidate${candidateIndex}`} value="" />
             </label>
           </div>
         {/each}
@@ -142,13 +141,13 @@
     </div>
 
     <div class="mb-24">
-      <form on:submit={handleVoterSubmit}>
+      <form on:submit|preventDefault={handleVoterSubmit}>
         <!-- Dynamic rendering of voter inputs -->
         {#each Array($voterCount1) as _, voterIndex}
           <div>
             <label>
               Voter {voterIndex + 1}:
-              <input type="text" name={`voter${voterIndex}`} required />
+              <input type="text" id="text" name={`voter${voterIndex}`} value="" />
             </label>
           </div>
         {/each}
