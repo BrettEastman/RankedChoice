@@ -1,5 +1,4 @@
 <script lang="ts">
-  // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   // input each of the candate names to each form input, then press submit to trigger the handleSubmit function
   // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and a blank array for votes
   // when adding a new candidate, add object with candidate name and blank votes array
@@ -14,25 +13,30 @@
 
   let candidates = [];
 
+  // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   const handleCandidateSubmit = (e) => {
     const formData = new FormData(e.target);
     for (let field of formData) {
       const [key, value] = field;
-      candidates.push(value);
+      // candidates.push(value);
+      // candidateData.push({"name": value});
+      candidateData[value] = [];
     }
-    console.log('candidates:', candidates);
+    console.log('candidateData:', candidateData);
   };
+
+  let voters = [];
 
   const handleVoterSubmit = (e) => {
     const formData = new FormData(e.target);
     const data = {};
     for (let field of formData) {
       const [key, value] = field;
-      data[key] = value;
-      // candidateData.update((n) => [...n, { name: value, votes: [] }]);
-      $candidateData.push({ name: value, votes: [] });
+      voters.push(value);
+      // $candidateData.push(data);
     }
-    console.log('candidateData:', candidateData);
+    // console.log('voters:', voters);
+    // console.log('candidateData:', candidateData);
   };
 
   const candidateCount = tweened(0,
