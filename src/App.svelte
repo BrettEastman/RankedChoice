@@ -2,6 +2,7 @@
   // input each of the candate names to each form input, then press submit to trigger the handleSubmit function
   // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and a blank array for votes
   // when adding a new candidate, add object with candidate name and blank votes array
+  import { onMount } from 'svelte';
   import TailwindCss from './TailwindCSS.svelte';
   import Button from './lib/Button.svelte';
   import Inline from './lib/Inline.svelte';
@@ -9,23 +10,23 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1, candidateData } from './utils/stores';
+  import { candidateCount1, voterCount1, candidatesStore, votersStore } from './utils/stores';
 
   let candidates = [];
-
+  $: candidates = $candidatesStore;
   // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   const handleCandidateSubmit = (e) => {
     const formData = new FormData(e.target);
+    // console.log('formData:', formData);
     for (let field of formData) {
       const [key, value] = field;
-      // candidates.push(value);
+      $candidatesStore.push(value);
       // candidateData.push({"name": value});
-      candidateData[value] = [];
+      // candidateData[value] = [];
+      // candidateData[key] = value;
     }
-    console.log('candidateData:', candidateData);
+    console.log('candidates:', candidates);
   };
-
-  let voters = [];
 
   const handleVoterSubmit = (e) => {
     const formData = new FormData(e.target);
@@ -35,7 +36,7 @@
       voters.push(value);
       // $candidateData.push(data);
     }
-    // console.log('voters:', voters);
+    console.log('voters:', voters);
     // console.log('candidateData:', candidateData);
   };
 
@@ -160,6 +161,13 @@
       </form>
     </div>
   </Stack>
+
+  {#if $candidateCount1 > 0 && $voterCount1 > 0}
+    <div class="mb-24">
+      <!-- <Link to="/ballot" class="text-2xl font-bold hover:drop-shadow-xl hover:text-[#646cffaa]">Go to Ballot</Link> -->
+      <Button>Go to Ballot</Button>
+    </div>
+  {/if}
 </main>
 
 <style>
