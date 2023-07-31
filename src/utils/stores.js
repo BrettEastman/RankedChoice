@@ -2,7 +2,9 @@ import { writable } from 'svelte/store';
 
 export const candidateCount1 = writable(0);
 export const voterCount1 = writable(0);
-export const candidateData = writable([]);
+export const candidatesStore = writable([]);
+export const votersStore = writable([]);
+// export const candidateData = writable([]);
 // export const candidateData = writable([{name: '', votes: []}]);
 
 // // Example data:
