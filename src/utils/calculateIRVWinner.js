@@ -53,19 +53,19 @@ function calculateIRVWinner(candidateData) {
   return data[0].name;
 }
 
-// Example data:
-const candidateData = [
-  { name: 'blue', votes: [5, 8, 7] },
-  { name: 'purple', votes: [7, 8, 5] },
-  { name: 'green', votes: [5, 7, 8] },
-  { name: 'orange', votes: [3, 5, 12] },
-];
+// // Example data:
+// const candidateData = [
+//   { name: 'blue', votes: [5, 8, 7] },
+//   { name: 'purple', votes: [7, 8, 5] },
+//   { name: 'green', votes: [5, 7, 8] },
+//   { name: 'orange', votes: [3, 5, 12] },
+// ];
 
-const candidateData2 = [
-  { name: 'Mix', votes: [2, 0, 3] },
-  { name: 'Tame Impala', votes: [1, 3, 1] },
-  { name: 'Stereo Lab', votes: [2, 2, 1] },
-];
+// const candidateData2 = [
+//   { name: 'Mix', votes: [2, 0, 3] },
+//   { name: 'Tame Impala', votes: [1, 3, 1] },
+//   { name: 'Stereo Lab', votes: [2, 2, 1] },
+// ];
 
-const winner = calculateIRVWinner(candidateData2);
-console.log(`The winner is: ${winner}`);
+// const winner = calculateIRVWinner(candidateData2);
+// console.log(`The winner is: ${winner}`);

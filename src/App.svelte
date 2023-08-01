@@ -1,8 +1,4 @@
 <script lang="ts">
-  // input each of the candate names to each form input, then press submit to trigger the handleSubmit function
-  // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and a blank array for votes
-  // when adding a new candidate, add object with candidate name and blank votes array
-  import { onMount } from 'svelte';
   import TailwindCss from './TailwindCSS.svelte';
   import Button from './lib/Button.svelte';
   import Inline from './lib/Inline.svelte';
@@ -10,7 +6,8 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1, candidatesStore, votersStore } from './utils/stores';
+  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore } from './utils/stores';
+  import Ballot from './components/Ballot.svelte';
 
   let candidates = [];
   $: candidates = $candidatesStore;
@@ -24,6 +21,7 @@
     console.log('candidates:', candidates);
   };
 
+  // same with voters
   let voters = [];
   $: voters = $votersStore;
   const handleVoterSubmit = (e) => {
@@ -35,6 +33,22 @@
     }
     console.log('voters:', voters);
   };
+
+  // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and a blank array for votes
+  let electionData = [];
+  $: electionData = $electionStore;
+  const handleElectionData = () => {
+    for (let candidate of $candidatesStore) {
+      $electionStore.push({
+        name: candidate,
+        votes: []
+      });
+    }
+    counter++;
+    console.log('electionData:', electionData);
+  };
+
+  let counter = 0;
 
   const candidateCount = tweened(0,
     {
@@ -84,82 +98,88 @@
 <TailwindCss />
 
 <main class="max-w-4xl p-4 m-auto text-center">
-  <Stack gutter="gap-4">
-    <h1 class="text-3xl font-bold mt-2.5 mb-12 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
+  {#if counter === 0}
+    <Stack gutter="gap-4">
+      <h1 class="text-3xl font-bold mt-2.5 mb-12 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
+      <p class="text-3xl mt-2.5 mb-4">
+        How many candidates?
+      </p>
 
-    <p class="text-3xl mt-2.5 mb-4">
-      How many candidates?
-    </p>
+      <h1 class="text-2xl font-bold">Candidates: {Math.floor($candidateCount)}</h1>
 
-    <h1 class="text-2xl font-bold">Candidates: {Math.floor($candidateCount)}</h1>
+      <div class="text-xl mt-2.5 mb-4">
+        <Inline gutter="gap-4" justify="justify-center">
+          <Button onClick={incrementCandidate}> + </Button>
+          <Button onClick={decrementCandidate}> - </Button>
+          <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
+        </Inline>
+      </div>
 
-    <div class="text-xl mt-2.5 mb-4">
-      <Inline gutter="gap-4" justify="justify-center">
-        <Button onClick={incrementCandidate}> + </Button>
-        <Button onClick={decrementCandidate}> - </Button>
-        <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
-      </Inline>
-    </div>
+      <div class="mb-4">
+        <label for="candidateProg">Candidate total out of 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
+        <progress id="candidateProg" max="5" value={$candidateCount}></progress>
+      </div>
 
-    <div class="mb-4">
-      <label for="candidateProg">Candidate total out of 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
-      <progress id="candidateProg" max="5" value={$candidateCount}></progress>
-    </div>
+    <!-- input each of the candate names to each form input, then press submit to trigger the handleSubmit function -->
+      <div class="mb-24">
+        <form on:submit|preventDefault={handleCandidateSubmit}>
+          {#each Array($candidateCount1) as _, candidateIndex}
+            <div>
+              <label>
+                Candidate {candidateIndex + 1}:
+                <input type="text" id="text" name={`candidate${candidateIndex}`} value="" />
+              </label>
+            </div>
+          {/each}
 
-    <div class="mb-24">
-      <form on:submit|preventDefault={handleCandidateSubmit}>
-        {#each Array($candidateCount1) as _, candidateIndex}
-          <div>
-            <label>
-              Candidate {candidateIndex + 1}:
-              <input type="text" id="text" name={`candidate${candidateIndex}`} value="" />
-            </label>
-          </div>
-        {/each}
+          <button type="submit">Submit Candidate Names</button>
+        </form>
+      </div>
 
-        <button type="submit">Submit Candidate Names</button>
-      </form>
-    </div>
+      <p class="text-3xl mt-2.5 mb-4">
+        How many voters?
+      </p>
 
-    <p class="text-3xl mt-2.5 mb-4">
-      How many voters?
-    </p>
+      <h1 class="text-2xl font-bold">Voters: {Math.ceil($voterCount)}</h1>
 
-    <h1 class="text-2xl font-bold">Voters: {Math.ceil($voterCount)}</h1>
+      <div class="text-xl mt-2.5 mb-4 ">
+        <Inline gutter="gap-4" justify="justify-center">
+          <Button onClick={incrementVoter}> + </Button>
+          <Button onClick={decrementVoter}> - </Button>
+          <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
+        </Inline>
+      </div>
 
-    <div class="text-xl mt-2.5 mb-4 ">
-      <Inline gutter="gap-4" justify="justify-center">
-        <Button onClick={incrementVoter}> + </Button>
-        <Button onClick={decrementVoter}> - </Button>
-        <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
-      </Inline>
-    </div>
+      <div class="mb-4">
+        <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
+        <progress id="voterprog" max="20" value={$voterCount}></progress>
+      </div>
 
-    <div class="mb-4">
-      <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
-      <progress id="voterprog" max="20" value={$voterCount}></progress>
-    </div>
+      <div class="mb-12">
+        <form on:submit|preventDefault={handleVoterSubmit}>
+          {#each Array($voterCount1) as _, voterIndex}
+            <div>
+              <label>
+                Voter {voterIndex + 1}:
+                <input type="text" id="text" name={`voter${voterIndex}`} value="" />
+              </label>
+            </div>
+          {/each}
 
-    <div class="mb-12">
-      <form on:submit|preventDefault={handleVoterSubmit}>
-        {#each Array($voterCount1) as _, voterIndex}
-          <div>
-            <label>
-              Voter {voterIndex + 1}:
-              <input type="text" id="text" name={`voter${voterIndex}`} value="" />
-            </label>
-          </div>
-        {/each}
+          <button type="submit">Submit Voter Names</button>
+        </form>
+      </div>
+    </Stack>
 
-        <button type="submit">Submit Voter Names</button>
-      </form>
-    </div>
-  </Stack>
+    {#if $candidateCount1 > 0 && $voterCount1 > 0}
+      <div class="mb-24">
+        <Button onClick={handleElectionData}>Go to Ballot</Button>
+      </div>
+    {/if}
+  {/if}
 
-  {#if $candidateCount1 > 0 && $voterCount1 > 0}
-    <div class="mb-24">
-      <Button>Go to Ballot</Button>
-    </div>
+  {#if counter === 1}
+    <Ballot />
   {/if}
 </main>
 
