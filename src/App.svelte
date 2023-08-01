@@ -8,6 +8,7 @@
 	import { cubicOut } from 'svelte/easing';
   import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore } from './utils/stores';
   import Ballot from './components/Ballot.svelte';
+  import Columns from './lib/Columns.svelte';
 
   let candidates = [];
   $: candidates = $candidatesStore;
@@ -179,6 +180,14 @@
   {/if}
 
   {#if counter === 1}
+    <h1>Candidates</h1>
+    <Columns columns={$candidateCount} switchAt="sm">
+      {#each $electionStore as candidate}
+        <div class="text-2xl font-bold">
+          <h2>{candidate.name}</h2>
+        </div>
+      {/each}
+    </Columns>
     <Ballot />
   {/if}
 </main>
