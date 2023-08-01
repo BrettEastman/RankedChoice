@@ -37,7 +37,7 @@
 
 <!--
 @component
-Inline is a layout component that is essentially a `<div`> with `display: flex;`. It is used to create a horizontal row of items. If you provide a `switchAt` property, it will become a column below the screen size specified. Originally developed by Brett Eastman and Alex Nitta for Woodshed.
+Inline is a layout component that is essentially a `<div`> with `display: flex;`. It is used to create a horizontal row of items. If you provide a `switchAt` property, it will become a column below the screen size specified. Originally developed by Brett Eastman and Alex Nitta.
 
 | Prop         | Type   | Options                                                                                           | Default         | Description                                                                                                  |
 | ------------ | ------ | ------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------ |

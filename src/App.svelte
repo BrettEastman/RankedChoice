@@ -17,27 +17,23 @@
   // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   const handleCandidateSubmit = (e) => {
     const formData = new FormData(e.target);
-    // console.log('formData:', formData);
     for (let field of formData) {
       const [key, value] = field;
       $candidatesStore.push(value);
-      // candidateData.push({"name": value});
-      // candidateData[value] = [];
-      // candidateData[key] = value;
     }
     console.log('candidates:', candidates);
   };
 
+  let voters = [];
+  $: voters = $votersStore;
   const handleVoterSubmit = (e) => {
     const formData = new FormData(e.target);
     const data = {};
     for (let field of formData) {
       const [key, value] = field;
-      voters.push(value);
-      // $candidateData.push(data);
+      $votersStore.push(value);
     }
     console.log('voters:', voters);
-    // console.log('candidateData:', candidateData);
   };
 
   const candidateCount = tweened(0,
@@ -112,7 +108,6 @@
 
     <div class="mb-24">
       <form on:submit|preventDefault={handleCandidateSubmit}>
-        <!-- Dynamic rendering of candidate inputs -->
         {#each Array($candidateCount1) as _, candidateIndex}
           <div>
             <label>
@@ -145,9 +140,8 @@
       <progress id="voterprog" max="20" value={$voterCount}></progress>
     </div>
 
-    <div class="mb-24">
+    <div class="mb-12">
       <form on:submit|preventDefault={handleVoterSubmit}>
-        <!-- Dynamic rendering of voter inputs -->
         {#each Array($voterCount1) as _, voterIndex}
           <div>
             <label>
@@ -164,7 +158,6 @@
 
   {#if $candidateCount1 > 0 && $voterCount1 > 0}
     <div class="mb-24">
-      <!-- <Link to="/ballot" class="text-2xl font-bold hover:drop-shadow-xl hover:text-[#646cffaa]">Go to Ballot</Link> -->
       <Button>Go to Ballot</Button>
     </div>
   {/if}

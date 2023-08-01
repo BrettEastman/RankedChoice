@@ -7,7 +7,7 @@
 
 <!--
 @component
-PadBox is a component designed to create consistent padding based on the spacing constants. PadBox takes either a single number or an array of numbers (like the css shorthand for top / right / bottom / left) for fine tuning the padding. Originally developed by Brett Eastman and Alex Nitta for Woodshed.
+PadBox is a component designed to create consistent padding based on the spacing constants. PadBox takes either a single number or an array of numbers (like the css shorthand for top / right / bottom / left) for fine tuning the padding. Originally developed by Brett Eastman and Alex Nitta.
 
 | Prop    | Type            | Options                                         | Default | Description             |
 | ------- | --------------- | ----------------------------------------------- | ------- | ----------------------- |

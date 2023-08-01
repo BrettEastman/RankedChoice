@@ -8,7 +8,7 @@
 
 <!--
 @component
-Button is a styled button component that can be used to create a button with a background color and a shadow. Adapted from component library originally developed by Brett Eastman and Alex Nitta for Woodshed.
+Button is a styled button component that can be used to create a button with a background color and a shadow. Adapted from component library originally developed by Brett Eastman and Alex Nitta.
 
 | Prop    | Type     | Options                     | Default       | Description                                  |
 | ------- | -------- | --------------------------- | ------------- | -------------------------------------------- |
