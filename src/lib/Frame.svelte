@@ -42,7 +42,7 @@
 
 <!--
 @component
-The Frame component is useful for cropping an <img> or <video> to a desired aspect ratio. Originally developed by Brett Eastman and Alex Nitta.
+The Frame component is useful for cropping an <img> or <video> to a desired aspect ratio. Originally developed by Alex Nitta, with Brett Eastman.
 
 | Prop     | Type   | Options                                                                                                      | Default | Description                                                       |
 | -------- | ------ | ------------------------------------------------------------------------------------------------------------ | ------- | ----------------------------------------------------------------- |
