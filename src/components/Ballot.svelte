@@ -1,8 +1,11 @@
 <script>
-  import { electionStore, candidatesStore, votersStore } from '../utils/stores.js';
+  import { electionStore, candidatesStore, votersStore, count } from '../utils/stores.js';
 
   let electionResult;
   $: electionResult = $electionStore;
+
+  let counter;
+  $: counter = $count;
 
   const handleVoteSubmit = (e) => {
     const formData = new FormData(e.target);
@@ -14,7 +17,9 @@
         }
       }
     }
+    counter++;
     console.log('electionResult:', electionResult);
+    console.log('counterBallot:', counter);
   };
 </script>
 

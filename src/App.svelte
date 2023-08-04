@@ -6,7 +6,7 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore } from './utils/stores';
+  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count } from './utils/stores';
   import Ballot from './components/Ballot.svelte';
   import Columns from './lib/Columns.svelte';
 
@@ -49,10 +49,12 @@
     }
     counter++;
     // console.log('electionStore:', electionStore);
+    console.log('counterApp:', counter);
     console.log('electionData:', electionData);
   };
 
-  let counter = 0;
+  let counter;
+  $: counter = $count;
 
   const candidateCount = tweened(0,
     {
@@ -183,7 +185,7 @@
   {/if}
 
   {#if counter === 1}
-    <h1>Candidates</h1>
+    <h1 class="text-3xl font-bold mb-8">Candidates</h1>
     <Columns columns={$candidateCount} switchAt="sm">
       {#each $electionStore as candidate}
         <div class="text-2xl font-bold">
@@ -192,6 +194,18 @@
       {/each}
     </Columns>
     <Ballot />
+  {/if}
+
+  {#if counter === 2}
+    <h1 class="text-3xl font-bold mb-8">Candidates</h1>
+    <Columns columns={$candidateCount} switchAt="sm">
+      {#each $electionStore as candidate}
+        <div class="text-2xl font-bold">
+          <h2>{candidate.name}</h2>
+        </div>
+      {/each}
+    </Columns>
+    <div>counter is equal to 2?</div>
   {/if}
 </main>
 
