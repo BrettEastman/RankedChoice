@@ -1,14 +1,20 @@
 <script>
   import { electionStore, candidatesStore, votersStore } from '../utils/stores.js';
+
+  let electionResult;
+  $: electionResult = $electionStore;
+
   const handleVoteSubmit = (e) => {
     const formData = new FormData(e.target);
-    const data = {};
     for (let field of formData) {
       const [key, value] = field;
-      data[key] = value;
+      for (let result of electionResult) {
+        if (result.name === value) {
+          result.votes[key]++;
+        }
+      }
     }
-    console.log('data:', data);
-    console.log('electionStore:', electionStore);
+    console.log('electionResult:', electionResult);
   };
 </script>
 

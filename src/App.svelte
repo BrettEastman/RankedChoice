@@ -40,12 +40,15 @@
   $: electionData = $electionStore;
   const handleElectionData = () => {
     for (let candidate of $candidatesStore) {
+      // electionStore.update((n) => [...n, { name: candidate, votes: [] }]);
+      // console.log('candidate!:', candidate);
       $electionStore.push({
         name: candidate,
-        votes: []
+        votes: [0,0,0]
       });
     }
     counter++;
+    // console.log('electionStore:', electionStore);
     console.log('electionData:', electionData);
   };
 
