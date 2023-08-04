@@ -28,7 +28,7 @@
 
   <div class="mb-24">
       <form on:submit|preventDefault={handleVoteSubmit}>
-        {#each $candidatesStore as candidate, candidateIndex}
+        {#each $candidatesStore as candidateIndex}
           <div>
             <label>
               {candidateIndex + 1}:

@@ -10,9 +10,13 @@
   import Ballot from './components/Ballot.svelte';
   import Columns from './lib/Columns.svelte';
 
+  let counter;
+  $: counter = $count;
+
+  // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   let candidates = [];
   $: candidates = $candidatesStore;
-  // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
+
   const handleCandidateSubmit = (e) => {
     const formData = new FormData(e.target);
     for (let field of formData) {
@@ -25,6 +29,7 @@
   // same with voters
   let voters = [];
   $: voters = $votersStore;
+
   const handleVoterSubmit = (e) => {
     const formData = new FormData(e.target);
     const data = {};
@@ -35,9 +40,10 @@
     console.log('voters:', voters);
   };
 
-  // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and a blank array for votes
+  // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and an array of three zeros for votes
   let electionData = [];
   $: electionData = $electionStore;
+
   const handleElectionData = () => {
     for (let candidate of $candidatesStore) {
       // electionStore.update((n) => [...n, { name: candidate, votes: [] }]);
@@ -52,9 +58,6 @@
     console.log('counterApp:', counter);
     console.log('electionData:', electionData);
   };
-
-  let counter;
-  $: counter = $count;
 
   const candidateCount = tweened(0,
     {
@@ -197,14 +200,6 @@
   {/if}
 
   {#if counter === 2}
-    <h1 class="text-3xl font-bold mb-8">Candidates</h1>
-    <Columns columns={$candidateCount} switchAt="sm">
-      {#each $electionStore as candidate}
-        <div class="text-2xl font-bold">
-          <h2>{candidate.name}</h2>
-        </div>
-      {/each}
-    </Columns>
     <div>counter is equal to 2?</div>
   {/if}
 </main>
