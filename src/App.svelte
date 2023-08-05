@@ -6,8 +6,7 @@
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count } from './utils/stores';
-  import Ballot from './components/Ballot.svelte';
+  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count, numberVoted } from './utils/stores';
   import Columns from './lib/Columns.svelte';
 
   let counter;
@@ -46,18 +45,40 @@
 
   const handleElectionData = () => {
     for (let candidate of $candidatesStore) {
-      // electionStore.update((n) => [...n, { name: candidate, votes: [] }]);
-      // console.log('candidate!:', candidate);
       $electionStore.push({
         name: candidate,
         votes: [0,0,0]
       });
     }
     counter++;
-    // console.log('electionStore:', electionStore);
-    console.log('counterApp:', counter);
+    console.log('handleElectionData counter:', counter);
     console.log('electionData:', electionData);
   };
+
+  let voted = 0;
+  $: voted = $numberVoted;
+
+  // Add votes from each voter
+  const handleVoteSubmit = (e) => {
+    const formData = new FormData(e.target);
+    for (let field of formData) {
+      const [key, value] = field;
+      for (let result of electionData) {
+        if (result.name === value) {
+          result.votes[key]++;
+        }
+      }
+    }
+    voted++;
+    console.log('voted:', voted);
+    console.log('electionData:', electionData);
+    console.log('handleVoteSubmit counter:', counter);
+  };
+
+  function incrementCounter() {
+    counter++;
+    console.log('counter incremented:', counter);
+  }
 
   const candidateCount = tweened(0,
     {
@@ -196,11 +217,35 @@
         </div>
       {/each}
     </Columns>
-    <Ballot />
+
+    {#each $votersStore as voter}
+      <h2>{voter}</h2>
+
+      <div class="mb-24">
+          <form on:submit|preventDefault={handleVoteSubmit}>
+            {#each $candidatesStore as candidate, candidateIndex}
+              <div>
+                <label>
+                  {candidateIndex + 1}:
+                  <input type="text" id="text" name={`${candidateIndex}`} value="" />
+                </label>
+              </div>
+            {/each}
+
+            <button type="submit">Submit Candidate Names</button>
+          </form>
+        </div>
+    {/each}
+
+    {#if voted >= 4}
+      <div class="mb-24">
+        <Button onClick={incrementCounter}>Go to final vote</Button>
+      </div>
+    {/if}
   {/if}
 
   {#if counter === 2}
-    <div>counter is equal to 2?</div>
+    <div>counter is equal to 2 now</div>
   {/if}
 </main>
 
