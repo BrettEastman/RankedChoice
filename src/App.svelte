@@ -3,6 +3,7 @@
   import Button from './lib/Button.svelte';
   import Inline from './lib/Inline.svelte';
   import Stack from './lib/Stack.svelte';
+  import { calculateWinner } from './scripts/calculateWinner.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -51,8 +52,8 @@
       });
     }
     counter++;
-    console.log('handleElectionData counter:', counter);
-    console.log('electionData:', electionData);
+    // console.log('handleElectionData counter:', counter);
+    // console.log('electionData:', electionData);
   };
 
   let voted = 0;
@@ -70,14 +71,17 @@
       }
     }
     voted++;
-    console.log('voted:', voted);
+    // console.log('voted:', voted);
     console.log('electionData:', electionData);
-    console.log('handleVoteSubmit counter:', counter);
+    // console.log('handleVoteSubmit counter:', counter);
   };
 
+  let winner;
   function incrementCounter() {
+    winner = calculateWinner(electionData);
     counter++;
-    console.log('counter incremented:', counter);
+    // console.log('counter incremented:', counter);
+    console.log('the winner is: ', winner)
   }
 
   const candidateCount = tweened(0,
@@ -245,7 +249,7 @@
   {/if}
 
   {#if counter === 2}
-    <div>counter is equal to 2 now</div>
+    <div>The winner is {winner}</div>
   {/if}
 </main>
 
