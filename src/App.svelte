@@ -4,13 +4,13 @@
   import Inline from './lib/Inline.svelte';
   import Stack from './lib/Stack.svelte';
   import Columns from './lib/Columns.svelte';
+  import PadBox from './lib/PadBox.svelte';
 
   import { calculateWinner } from './scripts/calculateWinner.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
   import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count, numberVoted } from './utils/stores';
-  import PadBox from './lib/PadBox.svelte';
 
   let counter;
   $: counter = $count;
@@ -143,13 +143,13 @@
 
 <main class="max-w-4xl p-4 m-auto text-center">
   {#if counter === 0}
+  <h1 class="text-3xl font-bold mt-2.5 mb-8 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
     <Stack gutter="gap-2">
-      <h1 class="text-3xl font-bold mt-2.5 mb-8 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
-      <p class="text-xl mt-2.5 mb-4">
+      <p class="text-xl mt-2.5 mb-2">
         How many candidates?
       </p>
 
-      <h1 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h1>
+      <h2 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h2>
 
       <div class="text-xl mt-2.5 mb-4">
         <Inline gutter="gap-4" justify="justify-center">
@@ -165,8 +165,8 @@
       </Stack>
 
     <!-- input each of the candate names to each form input, then press submit to trigger the handleSubmit function -->
-      <div class="mb-12">
-        <form on:submit|preventDefault={handleCandidateSubmit}>
+      <form on:submit|preventDefault={handleCandidateSubmit}>
+        <Stack gutter="gap-0.5">
           {#each Array($candidateCount1) as _, candidateIndex}
             <PadBox padding={1}>
               <label>
@@ -175,16 +175,15 @@
               </label>
             </PadBox>
           {/each}
+          <button class="candidate" type="submit">Submit Candidate Names</button>
+        </Stack>
+      </form>
 
-          <button type="submit">Submit Candidate Names</button>
-        </form>
-      </div>
-
-      <p class="text-xl mt-2.5 mb-4">
+      <p class="text-xl mt-20 mb-2">
         How many voters?
       </p>
 
-      <h1 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h1>
+      <h2 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h2>
 
       <div class="text-xl mt-2.5 mb-4 ">
         <Inline gutter="gap-4" justify="justify-center">
@@ -199,8 +198,8 @@
         <progress id="voterprog" max="20" value={$voterCount}></progress>
       </Stack>
 
-      <div class="mb-12">
-        <form on:submit|preventDefault={handleVoterSubmit}>
+      <form on:submit|preventDefault={handleVoterSubmit}>
+        <Stack gutter="gap-0.5">
           {#each Array($voterCount1) as _, voterIndex}
             <PadBox padding={1}>
               <label>
@@ -209,10 +208,9 @@
               </label>
             </PadBox>
           {/each}
-
-          <button type="submit">Submit Voter Names</button>
-        </form>
-      </div>
+          <button class="voter" type="submit">Submit Voter Names</button>
+        </Stack>
+      </form>
     </Stack>
 
     {#if $candidateCount1 > 0 && $voterCount1 > 0}
@@ -246,12 +244,12 @@
               </div>
             {/each}
 
-            <button type="submit">Submit Candidate Names</button>
+            <button type="submit">Submit</button>
           </form>
         </div>
     {/each}
 
-    {#if voted >= 4}
+    {#if voted > 4}
       <div class="mb-24">
         <Button onClick={incrementCounter}>Go to final vote</Button>
       </div>
@@ -281,4 +279,25 @@
         background-color: rgb(119, 126, 167);
         border-radius: 2rem;
     }
+  button.candidate {
+    border: 1px solid;
+    border-radius: 2rem;
+    padding: .5rem 1.25rem;
+    background-color: rgb(59 130 246);
+    color: white;
+  }
+  button.candidate:hover {
+    background-color: rgb(29 78 216);
+  }
+  button.voter {
+    border: 1px solid;
+    border-radius: 2rem;
+    padding: .5rem 1.25rem;
+    margin-top: 1rem;
+    background-color: rgb(59 130 246);
+    color: white;
+  }
+  button.voter:hover {
+    background-color: rgb(29 78 216);
+  }
 </style>
