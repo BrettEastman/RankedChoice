@@ -54,8 +54,6 @@
       });
     }
     counter++;
-    // console.log('handleElectionData counter:', counter);
-    // console.log('electionData:', electionData);
   };
 
   let voted = 0;
@@ -73,27 +71,23 @@
       }
     }
     voted++;
-    // console.log('voted:', voted);
     console.log('electionData:', electionData);
-    // console.log('handleVoteSubmit counter:', counter);
   };
 
   let winner;
   function incrementCounter() {
     winner = calculateWinner(electionData);
     counter++;
-    // console.log('counter incremented:', counter);
-    console.log('the winner is: ', winner)
   }
 
-  const candidateCount = tweened(0,
+  const candidateCount = tweened(2,
     {
       duration: 400,
       easing: cubicOut
     }
   );
 
-  const voterCount = tweened(0,
+  const voterCount = tweened(3,
     {
       duration: 400,
       easing: cubicOut
@@ -164,7 +158,6 @@
         <progress id="candidateProg" max="5" value={$candidateCount}></progress>
       </Stack>
 
-    <!-- input each of the candate names to each form input, then press submit to trigger the handleSubmit function -->
       <form on:submit|preventDefault={handleCandidateSubmit}>
         <Stack gutter="gap-0.5">
           {#each Array($candidateCount1) as _, candidateIndex}
@@ -211,13 +204,12 @@
           <button class="voter" type="submit">Submit Voter Names</button>
         </Stack>
       </form>
+      {#if $candidateCount1 > 0 && $voterCount1 > 0}
+        <div class="mt-12 rounded-s-full">
+          <Button onClick={handleElectionData}>Go to Ballot</Button>
+        </div>
+      {/if}
     </Stack>
-
-    {#if $candidateCount1 > 0 && $voterCount1 > 0}
-      <div class="mb-24">
-        <Button onClick={handleElectionData}>Go to Ballot</Button>
-      </div>
-    {/if}
   {/if}
 
   {#if counter === 1}
@@ -279,25 +271,15 @@
         background-color: rgb(119, 126, 167);
         border-radius: 2rem;
     }
-  button.candidate {
+  button {
     border: 1px solid;
     border-radius: 2rem;
-    padding: .5rem 1.25rem;
+    padding: .15rem auto;
     background-color: rgb(59 130 246);
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
   }
-  button.candidate:hover {
-    background-color: rgb(29 78 216);
-  }
-  button.voter {
-    border: 1px solid;
-    border-radius: 2rem;
-    padding: .5rem 1.25rem;
-    margin-top: 1rem;
-    background-color: rgb(59 130 246);
-    color: white;
-  }
-  button.voter:hover {
+  button:hover {
     background-color: rgb(29 78 216);
   }
 </style>
