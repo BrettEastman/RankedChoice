@@ -20,6 +20,10 @@
   $: candidates = $candidatesStore;
 
   const handleCandidateSubmit = (e) => {
+    const candidateButton = document.getElementById('candidate');
+    candidateButton.disabled = true;
+    candidateButton.textContent = 'Candidates submitted';
+
     const formData = new FormData(e.target);
     for (let field of formData) {
       const [key, value] = field;
@@ -33,6 +37,10 @@
   $: voters = $votersStore;
 
   const handleVoterSubmit = (e) => {
+    const voterButton = document.getElementById('voter');
+    voterButton.disabled = true;
+    voterButton.textContent = 'Voters submitted';
+
     const formData = new FormData(e.target);
     const data = {};
     for (let field of formData) {
@@ -80,7 +88,7 @@
     counter++;
   }
 
-  const candidateCount = tweened(2,
+  const candidateCount = tweened(3,
     {
       duration: 400,
       easing: cubicOut
@@ -168,7 +176,7 @@
               </label>
             </PadBox>
           {/each}
-          <button class="candidate" type="submit">Submit Candidate Names</button>
+          <button class="candidate" id="candidate" type="submit">Submit Candidate Names</button>
         </Stack>
       </form>
 
@@ -201,7 +209,7 @@
               </label>
             </PadBox>
           {/each}
-          <button class="voter" type="submit">Submit Voter Names</button>
+          <button class="voter" id="voter" type="submit">Submit Voter Names</button>
         </Stack>
       </form>
       {#if $candidateCount1 > 0 && $voterCount1 > 0}
@@ -282,4 +290,9 @@
   button:hover {
     background-color: rgb(29 78 216);
   }
+  button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
 </style>
