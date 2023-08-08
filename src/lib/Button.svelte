@@ -17,7 +17,7 @@ Button is a styled button component that can be used to create a button with a b
 -->
 
 <button
-  class="rounded-full px-5 py-2 tracking-wide text-white shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] {color} active:bg-blue-700"
+  class="rounded-full px-3 py-1 tracking-wide text-white text-sm border-solid border-1 shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] {color} active:bg-blue-700"
   on:click={onClick}
 >
   <slot />

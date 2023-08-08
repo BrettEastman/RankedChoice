@@ -4,13 +4,13 @@
   import Inline from './lib/Inline.svelte';
   import Stack from './lib/Stack.svelte';
   import Columns from './lib/Columns.svelte';
+  import PadBox from './lib/PadBox.svelte';
 
   import { calculateWinner } from './scripts/calculateWinner.svelte';
 
   import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
   import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count, numberVoted } from './utils/stores';
-  import PadBox from './lib/PadBox.svelte';
 
   let counter;
   $: counter = $count;
@@ -20,6 +20,10 @@
   $: candidates = $candidatesStore;
 
   const handleCandidateSubmit = (e) => {
+    const candidateButton = document.getElementById('candidate');
+    candidateButton.disabled = true;
+    candidateButton.textContent = 'Candidates submitted';
+
     const formData = new FormData(e.target);
     for (let field of formData) {
       const [key, value] = field;
@@ -33,6 +37,10 @@
   $: voters = $votersStore;
 
   const handleVoterSubmit = (e) => {
+    const voterButton = document.getElementById('voter');
+    voterButton.disabled = true;
+    voterButton.textContent = 'Voters submitted';
+
     const formData = new FormData(e.target);
     const data = {};
     for (let field of formData) {
@@ -54,8 +62,6 @@
       });
     }
     counter++;
-    // console.log('handleElectionData counter:', counter);
-    // console.log('electionData:', electionData);
   };
 
   let voted = 0;
@@ -73,27 +79,23 @@
       }
     }
     voted++;
-    // console.log('voted:', voted);
     console.log('electionData:', electionData);
-    // console.log('handleVoteSubmit counter:', counter);
   };
 
   let winner;
   function incrementCounter() {
     winner = calculateWinner(electionData);
     counter++;
-    // console.log('counter incremented:', counter);
-    console.log('the winner is: ', winner)
   }
 
-  const candidateCount = tweened(0,
+  const candidateCount = tweened(3,
     {
       duration: 400,
       easing: cubicOut
     }
   );
 
-  const voterCount = tweened(0,
+  const voterCount = tweened(3,
     {
       duration: 400,
       easing: cubicOut
@@ -143,13 +145,13 @@
 
 <main class="max-w-4xl p-4 m-auto text-center">
   {#if counter === 0}
+  <h1 class="text-3xl font-bold mt-2.5 mb-8 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
     <Stack gutter="gap-2">
-      <h1 class="text-3xl font-bold mt-2.5 mb-8 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
-      <p class="text-xl mt-2.5 mb-4">
+      <p class="text-xl mt-2.5 mb-2">
         How many candidates?
       </p>
 
-      <h1 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h1>
+      <h2 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h2>
 
       <div class="text-xl mt-2.5 mb-4">
         <Inline gutter="gap-4" justify="justify-center">
@@ -164,9 +166,8 @@
         <progress id="candidateProg" max="5" value={$candidateCount}></progress>
       </Stack>
 
-    <!-- input each of the candate names to each form input, then press submit to trigger the handleSubmit function -->
-      <div class="mb-12">
-        <form on:submit|preventDefault={handleCandidateSubmit}>
+      <form on:submit|preventDefault={handleCandidateSubmit}>
+        <Stack gutter="gap-0.5">
           {#each Array($candidateCount1) as _, candidateIndex}
             <PadBox padding={1}>
               <label>
@@ -175,16 +176,15 @@
               </label>
             </PadBox>
           {/each}
+          <button class="candidate" id="candidate" type="submit">Submit Candidate Names</button>
+        </Stack>
+      </form>
 
-          <button type="submit">Submit Candidate Names</button>
-        </form>
-      </div>
-
-      <p class="text-xl mt-2.5 mb-4">
+      <p class="text-xl mt-20 mb-2">
         How many voters?
       </p>
 
-      <h1 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h1>
+      <h2 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h2>
 
       <div class="text-xl mt-2.5 mb-4 ">
         <Inline gutter="gap-4" justify="justify-center">
@@ -199,8 +199,8 @@
         <progress id="voterprog" max="20" value={$voterCount}></progress>
       </Stack>
 
-      <div class="mb-12">
-        <form on:submit|preventDefault={handleVoterSubmit}>
+      <form on:submit|preventDefault={handleVoterSubmit}>
+        <Stack gutter="gap-0.5">
           {#each Array($voterCount1) as _, voterIndex}
             <PadBox padding={1}>
               <label>
@@ -209,17 +209,15 @@
               </label>
             </PadBox>
           {/each}
-
-          <button type="submit">Submit Voter Names</button>
-        </form>
-      </div>
+          <button class="voter" id="voter" type="submit">Submit Voter Names</button>
+        </Stack>
+      </form>
+      {#if $candidateCount1 > 0 && $voterCount1 > 0}
+        <div class="mt-12 rounded-s-full">
+          <Button onClick={handleElectionData}>Go to Ballot</Button>
+        </div>
+      {/if}
     </Stack>
-
-    {#if $candidateCount1 > 0 && $voterCount1 > 0}
-      <div class="mb-24">
-        <Button onClick={handleElectionData}>Go to Ballot</Button>
-      </div>
-    {/if}
   {/if}
 
   {#if counter === 1}
@@ -246,12 +244,12 @@
               </div>
             {/each}
 
-            <button type="submit">Submit Candidate Names</button>
+            <button type="submit">Submit</button>
           </form>
         </div>
     {/each}
 
-    {#if voted >= 4}
+    {#if voted > 4}
       <div class="mb-24">
         <Button onClick={incrementCounter}>Go to final vote</Button>
       </div>
@@ -281,4 +279,20 @@
         background-color: rgb(119, 126, 167);
         border-radius: 2rem;
     }
+  button {
+    border: 1px solid;
+    border-radius: 2rem;
+    padding: .15rem auto;
+    background-color: rgb(59 130 246);
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+  }
+  button:hover {
+    background-color: rgb(29 78 216);
+  }
+  button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
 </style>
