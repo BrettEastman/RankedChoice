@@ -7,6 +7,7 @@ export const voterCount1 = writable(3);
 export const candidatesStore = writable([]);
 export const votersStore = writable([]);
 export const electionStore = writable([]);
+export const winnerStore = writable('');
 
 // // Example data:
 // const electionStore = [
