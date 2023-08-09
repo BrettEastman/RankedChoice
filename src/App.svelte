@@ -1,19 +1,30 @@
 <script lang="ts">
   import TailwindCss from './TailwindCSS.svelte';
+
+  import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count, numberVoted, winnerStore } from './utils/stores';
+
   import Button from './lib/Button.svelte';
   import Inline from './lib/Inline.svelte';
   import Stack from './lib/Stack.svelte';
   import Columns from './lib/Columns.svelte';
   import PadBox from './lib/PadBox.svelte';
+  import Typewriter from './lib/Typewriter.svelte';
 
   import { calculateWinner } from './scripts/calculateWinner.svelte';
 
-  import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
-  import { candidateCount1, voterCount1, candidatesStore, votersStore, electionStore, count, numberVoted } from './utils/stores';
-
   let counter;
   $: counter = $count;
+
+  const backToHome = () => {
+    counter = 0;
+    candidates = [];
+    voters = [];
+    voted = 0;
+    winner = '';
+    console.log('back to home')
+  }
 
   // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   let candidates = [];
@@ -69,6 +80,10 @@
 
   // Add votes from each voter
   const handleVoteSubmit = (e) => {
+    const voteButton = document.getElementById('vote');
+    voteButton.disabled = true;
+    voteButton.textContent = 'Submitted';
+
     const formData = new FormData(e.target);
     for (let field of formData) {
       const [key, value] = field;
@@ -82,7 +97,9 @@
     console.log('electionData:', electionData);
   };
 
-  let winner;
+  let winner = '';
+  $: winner = $winnerStore;
+
   function incrementCounter() {
     winner = calculateWinner(electionData);
     counter++;
@@ -145,7 +162,7 @@
 
 <main class="max-w-4xl p-4 m-auto text-center">
   {#if counter === 0}
-  <h1 class="text-3xl font-bold mt-2.5 mb-8 hover:drop-shadow-xl hover:text-[#646cffaa]">Ranked Choice Voting Calculator</h1>
+  <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]" on:click={backToHome}>Ranked Choice Voting Calculator</h1>
     <Stack gutter="gap-2">
       <p class="text-xl mt-2.5 mb-2">
         How many candidates?
@@ -221,6 +238,7 @@
   {/if}
 
   {#if counter === 1}
+    <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]" on:click={backToHome}>Ranked Choice Voting Calculator</h1>
     <h1 class="text-3xl font-bold mb-8">Candidates</h1>
     <Columns columns={$candidateCount} switchAt="sm">
       {#each $electionStore as candidate}
@@ -244,12 +262,12 @@
               </div>
             {/each}
 
-            <button type="submit">Submit</button>
+            <button class="vote" id="vote" type="submit">Submit</button>
           </form>
         </div>
     {/each}
 
-    {#if voted > 4}
+    {#if voted >= voters.length}
       <div class="mb-24">
         <Button onClick={incrementCounter}>Go to final vote</Button>
       </div>
@@ -257,7 +275,10 @@
   {/if}
 
   {#if counter === 2}
-    <div>The winner is {winner}</div>
+    <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]" on:click={backToHome}>Ranked Choice Voting Calculator</h1>
+    <div class="text-xl">
+      <Typewriter winner={winner}/>
+    </div>
   {/if}
 </main>
 
