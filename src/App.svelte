@@ -14,17 +14,8 @@
 
   import { calculateWinner } from './scripts/calculateWinner.svelte';
 
-  let counter;
+  let counter = 0;
   $: counter = $count;
-
-  const backToHome = () => {
-    counter = 0;
-    candidates = [];
-    voters = [];
-    voted = 0;
-    winner = '';
-    console.log('back to home')
-  }
 
   // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   let candidates = [];
@@ -105,6 +96,16 @@
     counter++;
   }
 
+  const backToHome = () => {
+    winnerStore.set('');
+    numberVoted.set(0);
+    votersStore.set([]);
+    candidatesStore.set([]);
+    electionStore.set([]);
+    count.set(0);
+    counter = 0;
+  }
+
   const candidateCount = tweened(3,
     {
       duration: 400,
@@ -162,15 +163,15 @@
 
 <main class="max-w-4xl p-4 m-auto text-center">
   {#if counter === 0}
-  <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]" on:click={backToHome}>Ranked Choice Voting Calculator</h1>
-    <Stack gutter="gap-2">
-      <p class="text-xl mt-2.5 mb-2">
+  <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
+    <Stack gutter="gap-6">
+      <p class="text-xl">
         How many candidates?
       </p>
 
       <h2 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h2>
 
-      <div class="text-xl mt-2.5 mb-4">
+      <div class="text-xl">
         <Inline gutter="gap-4" justify="justify-center">
           <Button onClick={incrementCandidate}> + </Button>
           <Button onClick={decrementCandidate}> - </Button>
@@ -178,7 +179,7 @@
         </Inline>
       </div>
 
-      <Stack gutter="gap-4">
+      <Stack gutter="gap-2">
         <label for="candidateProg">Candidate total out of 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
         <progress id="candidateProg" max="5" value={$candidateCount}></progress>
       </Stack>
@@ -196,14 +197,16 @@
           <button class="candidate" id="candidate" type="submit">Submit Candidate Names</button>
         </Stack>
       </form>
+    </Stack>
 
-      <p class="text-xl mt-20 mb-2">
+    <Stack gutter="gap-6">
+      <p class="text-xl mt-20">
         How many voters?
       </p>
 
       <h2 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h2>
 
-      <div class="text-xl mt-2.5 mb-4 ">
+      <div class="text-xl">
         <Inline gutter="gap-4" justify="justify-center">
           <Button onClick={incrementVoter}> + </Button>
           <Button onClick={decrementVoter}> - </Button>
@@ -211,7 +214,7 @@
         </Inline>
       </div>
 
-      <Stack gutter="gap-4">
+      <Stack gutter="gap-2">
         <label for="voterprog">Voter total out of 20: {Math.floor(($voterCount / 20) * 100)}%</label>
         <progress id="voterprog" max="20" value={$voterCount}></progress>
       </Stack>
@@ -230,7 +233,7 @@
         </Stack>
       </form>
       {#if $candidateCount1 > 0 && $voterCount1 > 0}
-        <div class="mt-12 rounded-s-full">
+        <div class="mt-4 rounded-s-full">
           <Button onClick={handleElectionData}>Go to Ballot</Button>
         </div>
       {/if}
@@ -238,7 +241,7 @@
   {/if}
 
   {#if counter === 1}
-    <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]" on:click={backToHome}>Ranked Choice Voting Calculator</h1>
+    <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
     <h1 class="text-3xl font-bold mb-8">Candidates</h1>
     <Columns columns={$candidateCount} switchAt="sm">
       {#each $electionStore as candidate}
@@ -251,7 +254,7 @@
     {#each $votersStore as voter}
       <h2>{voter}</h2>
 
-      <div class="mb-24">
+      <div class="mb-16">
           <form on:submit|preventDefault={handleVoteSubmit}>
             {#each $candidatesStore as candidate, candidateIndex}
               <div>
@@ -275,7 +278,7 @@
   {/if}
 
   {#if counter === 2}
-    <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]" on:click={backToHome}>Ranked Choice Voting Calculator</h1>
+    <h1 class="text-3xl font-bold mt-2.5 mb-8 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
     <div class="text-xl">
       <Typewriter winner={winner}/>
     </div>
@@ -286,11 +289,12 @@
   progress {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     border-radius: 2rem;
     width: 100%;
     height: 25px;
-    border: 2px solid rgb(18, 1, 1);
+    border: 1px solid white;
     }
     progress::-webkit-progress-bar {
         background-color: rgb(252, 251, 251);
@@ -300,6 +304,7 @@
         background-color: rgb(119, 126, 167);
         border-radius: 2rem;
     }
+
   button {
     border: 1px solid;
     border-radius: 2rem;
@@ -315,5 +320,25 @@
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
-}
+  }
+
+  button.vote {
+    padding: 2px 10px;
+  }
+
+  button.candidate {
+    margin-top: 16px;
+  }
+
+  button.voter {
+    margin-top: 16px;
+  }
+
+  #text {
+    border: 1px solid white;
+    border-radius: 2rem;
+    padding: 2px 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+    cursor: pointer;
+  }
 </style>
