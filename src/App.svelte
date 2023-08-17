@@ -251,7 +251,6 @@
       {/if}
     </Stack>
 
-
     <Stack gutter="gap-12">
       {#if counter === 1}
         <h1 class="text-3xl font-bold mb-8">Candidates</h1>
@@ -283,7 +282,7 @@
         {/each}
 
         {#if voted >= voters.length}
-          <div class="mb-24">
+          <div class="mb-24 scale-150">
             <Button onClick={incrementCounter}>Go to final vote</Button>
           </div>
         {/if}
