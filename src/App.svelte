@@ -251,7 +251,7 @@
       {/if}
     </Stack>
 
-    <Stack gutter="gap-12">
+    <Stack gutter="gap-2">
       {#if counter === 1}
         <h1 class="text-3xl font-bold mb-8">Candidates</h1>
         <Columns columns={$candidateCount} switchAt="sm">
@@ -263,20 +263,22 @@
         </Columns>
 
         {#each $votersStore as voter}
-          <h2>{voter}</h2>
+          <h2 class="mt-12">{voter}</h2>
 
           <div class="mb-16">
               <form on:submit|preventDefault={handleVoteSubmit}>
                 {#each $candidatesStore as candidate, candidateIndex}
-                  <div>
-                    <label>
-                      {candidateIndex + 1}:
-                      <input type="text" id="text" name={`${candidateIndex}`} value="" />
-                    </label>
-                  </div>
+                  <PadBox padding={1}>
+                    <div>
+                      <label>
+                        {candidateIndex + 1}:
+                        <input type="text" id="text" name={`${candidateIndex}`} value="" />
+                      </label>
+                    </div>
+                  </PadBox>
                 {/each}
 
-                <button class="vote" id="vote" type="submit">Submit</button>
+                <button class="vote mt-2" id="vote" type="submit">Submit</button>
               </form>
             </div>
         {/each}
