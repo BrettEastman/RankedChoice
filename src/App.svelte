@@ -14,6 +14,7 @@
   import PadBox from './lib/PadBox.svelte';
   import Typewriter from './lib/Typewriter.svelte';
   import Split from './lib/Split.svelte';
+  import Cover from './lib/Cover.svelte';
 
   let counter = 0;
   $: counter = $count;
@@ -162,142 +163,147 @@
 
 <TailwindCss />
 
-<main class="max-w-4xl p-4 m-auto text-center">
-  <Stack gutter="gap-12">
-    {#if counter === 0}
-    <h1 class="text-3xl font-bold mt-2.5 mb-4 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
-      <Split gutter="gap-24" switchAt="xl">
-        <div>
-          <Stack gutter="gap-6">
-            <p class="text-xl">
-              How many candidates?
-            </p>
+<Cover minHeight="50vh" gutter="text-center" stretchContent={true}>
+  <h1 slot="top" class="text-4xl font-bold mt-2.5 mb-12 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
+  <main class="max-w-4xl p-4 m-auto text-center">
+    <Stack gutter="gap-12">
+      {#if counter === 0}
+        <Split gutter="gap-24" switchAt="lg">
+          <div>
+            <Stack gutter="gap-6">
+              <p class="text-xl">
+                How many candidates?
+              </p>
 
-            <h2 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h2>
+              <h2 class="text-lg font-bold">Candidates: {Math.floor($candidateCount)}</h2>
 
-            <div class="text-xl">
-              <Inline gutter="gap-4" justify="justify-center">
-                <Button onClick={incrementCandidate}> + </Button>
-                <Button onClick={decrementCandidate}> - </Button>
-                <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
-              </Inline>
-            </div>
+              <div class="text-xl">
+                <Inline gutter="gap-4" justify="justify-center">
+                  <Button onClick={incrementCandidate}> + </Button>
+                  <Button onClick={decrementCandidate}> - </Button>
+                  <Button onClick={resetCandidate} color="bg-red-500"> Reset </Button>
+                </Inline>
+              </div>
 
-            <Stack gutter="gap-2">
-              <label for="candidateProg">Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
-              <progress id="candidateProg" max="5" value={$candidateCount}></progress>
-            </Stack>
-
-            <form on:submit|preventDefault={handleCandidateSubmit}>
-              <Stack gutter="gap-0.5">
-                {#each Array($candidateCount1) as _, candidateIndex}
-                  <PadBox padding={1}>
-                    <label>
-                      Candidate {candidateIndex + 1}:
-                      <input type="text" id="text" name={`candidate${candidateIndex}`} value="" />
-                    </label>
-                  </PadBox>
-                {/each}
-                <button class="candidate" id="candidate" type="submit">Submit Candidate Names</button>
+              <Stack gutter="gap-2">
+                <label for="candidateProg">Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label>
+                <progress id="candidateProg" max="5" value={$candidateCount}></progress>
               </Stack>
-            </form>
-          </Stack>
-        </div>
 
-        <div>
-          <Stack gutter="gap-6">
-            <p class="text-xl">
-              How many voters?
-            </p>
-
-            <h2 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h2>
-
-            <div class="text-xl">
-              <Inline gutter="gap-4" justify="justify-center">
-                <Button onClick={incrementVoter}> + </Button>
-                <Button onClick={decrementVoter}> - </Button>
-                <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
-              </Inline>
-            </div>
-
-            <Stack gutter="gap-2">
-              <label for="voterprog">Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label>
-              <progress id="voterprog" max="20" value={$voterCount}></progress>
+              <form on:submit|preventDefault={handleCandidateSubmit}>
+                <Stack gutter="gap-0.5">
+                  {#each Array($candidateCount1) as _, candidateIndex}
+                    <PadBox padding={1}>
+                      <label>
+                        Candidate {candidateIndex + 1}:
+                        <input type="text" id="text" name={`candidate${candidateIndex}`} value="" />
+                      </label>
+                    </PadBox>
+                  {/each}
+                  <button class="candidate" id="candidate" type="submit">Submit Candidate Names</button>
+                </Stack>
+              </form>
             </Stack>
-
-            <form on:submit|preventDefault={handleVoterSubmit}>
-              <Stack gutter="gap-0.5">
-                {#each Array($voterCount1) as _, voterIndex}
-                  <PadBox padding={1}>
-                    <label>
-                      Voter {voterIndex + 1}:
-                      <input type="text" id="text" name={`voter${voterIndex}`} value="" />
-                    </label>
-                  </PadBox>
-                {/each}
-                <button class="voter" id="voter" type="submit">Submit Voter Names</button>
-              </Stack>
-            </form>
-          </Stack>
-        </div>
-      </Split>
-      {#if $candidateCount1 > 0 && $voterCount1 > 0}
-        <div class="scale-150 mt-4 rounded-s-full">
-          <Button onClick={handleElectionData}>Go to Ballot</Button>
-        </div>
-      {/if}
-    {/if}
-  </Stack>
-
-
-  <Stack gutter="gap-12">
-    {#if counter === 1}
-      <h1 class="text-3xl font-bold mt-2.5 mb-4 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
-      <h1 class="text-3xl font-bold mb-8">Candidates</h1>
-      <Columns columns={$candidateCount} switchAt="sm">
-        {#each $electionStore as candidate}
-          <div class="text-2xl font-bold">
-            <h2>{candidate.name}</h2>
           </div>
+
+          <div>
+            <Stack gutter="gap-6">
+              <p class="text-xl">
+                How many voters?
+              </p>
+
+              <h2 class="text-lg font-bold">Voters: {Math.ceil($voterCount)}</h2>
+
+              <div class="text-xl">
+                <Inline gutter="gap-4" justify="justify-center">
+                  <Button onClick={incrementVoter}> + </Button>
+                  <Button onClick={decrementVoter}> - </Button>
+                  <Button onClick={resetVoter} color="bg-red-500"> Reset </Button>
+                </Inline>
+              </div>
+
+              <Stack gutter="gap-2">
+                <label for="voterprog">Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label>
+                <progress id="voterprog" max="20" value={$voterCount}></progress>
+              </Stack>
+
+              <form on:submit|preventDefault={handleVoterSubmit}>
+                <Stack gutter="gap-0.5">
+                  {#each Array($voterCount1) as _, voterIndex}
+                    <PadBox padding={1}>
+                      <label>
+                        Voter {voterIndex + 1}:
+                        <input type="text" id="text" name={`voter${voterIndex}`} value="" />
+                      </label>
+                    </PadBox>
+                  {/each}
+                  <button class="voter" id="voter" type="submit">Submit Voter Names</button>
+                </Stack>
+              </form>
+            </Stack>
+          </div>
+        </Split>
+        {#if $candidateCount1 > 0 && $voterCount1 > 0}
+          <div class="scale-150 mt-4 rounded-s-full">
+            <Button onClick={handleElectionData}>Go to Ballot</Button>
+          </div>
+        {/if}
+      {/if}
+    </Stack>
+
+    <Stack gutter="gap-2">
+      {#if counter === 1}
+        <h1 class="text-3xl font-bold mb-8">Candidates</h1>
+        <Columns columns={$candidateCount} switchAt="sm">
+          {#each $electionStore as candidate}
+            <div class="text-2xl font-bold">
+              <h2>{candidate.name}</h2>
+            </div>
+          {/each}
+        </Columns>
+
+        {#each $votersStore as voter}
+          <h2 class="mt-12">{voter}</h2>
+
+          <div class="mb-16">
+              <form on:submit|preventDefault={handleVoteSubmit}>
+                {#each $candidatesStore as candidate, candidateIndex}
+                  <PadBox padding={1}>
+                    <div>
+                      <label>
+                        {candidateIndex + 1}:
+                        <input type="text" id="text" name={`${candidateIndex}`} value="" />
+                      </label>
+                    </div>
+                  </PadBox>
+                {/each}
+
+                <button class="vote mt-2" id="vote" type="submit">Submit</button>
+              </form>
+            </div>
         {/each}
-      </Columns>
 
-      {#each $votersStore as voter}
-        <h2>{voter}</h2>
-
-        <div class="mb-16">
-            <form on:submit|preventDefault={handleVoteSubmit}>
-              {#each $candidatesStore as candidate, candidateIndex}
-                <div>
-                  <label>
-                    {candidateIndex + 1}:
-                    <input type="text" id="text" name={`${candidateIndex}`} value="" />
-                  </label>
-                </div>
-              {/each}
-
-              <button class="vote" id="vote" type="submit">Submit</button>
-            </form>
+        {#if voted >= voters.length}
+          <div class="mb-24 scale-150">
+            <Button onClick={incrementCounter}>Go to final vote</Button>
           </div>
-      {/each}
+        {/if}
+      {/if}
+    </Stack>
 
-      {#if voted >= voters.length}
-        <div class="mb-24">
-          <Button onClick={incrementCounter}>Go to final vote</Button>
+    <Stack gutter="gap-12">
+      {#if counter === 2}
+        <div class="text-xl">
+          <Typewriter winner={winner}/>
         </div>
       {/if}
-    {/if}
-  </Stack>
+    </Stack>
+  </main>
 
-  <Stack gutter="gap-12">
-    {#if counter === 2}
-      <h1 class="text-3xl font-bold mt-2.5 mb-4 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
-      <div class="text-xl">
-        <Typewriter winner={winner}/>
-      </div>
-    {/if}
-  </Stack>
-</main>
+  <div slot="bottom" class="mt-12">
+    <p class="text-sm">Made by <a href="https://www.brettaustineastman.com/" target="_blank">Brett Eastman</a></p>
+  </div>
+</Cover>
 
 <style>
   progress {
