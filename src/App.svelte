@@ -15,6 +15,9 @@
   import Typewriter from './lib/Typewriter.svelte';
   import Split from './lib/Split.svelte';
   import Cover from './lib/Cover.svelte';
+  import Modal from './lib/Modal.svelte';
+
+  let showModal = false;
 
   let counter = 0;
   $: counter = $count;
@@ -164,7 +167,20 @@
 <TailwindCss />
 
 <Cover minHeight="50vh" gutter="text-center" stretchContent={true}>
-  <h1 slot="top" class="text-4xl font-bold mt-2.5 mb-12 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
+  <div slot="top" class="flex flex-col justify-center items-center">
+    <h1 class="max-w-max px-5 py-2 text-4xl font-bold mt-2.5 mb-4 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer" on:click|preventDefault={backToHome}>Ranked Choice Voting Calculator</h1>
+    <button class="about" on:click={() => (showModal = true)}>About</button>
+    <Modal bind:showModal>
+      <h2 slot="header">
+        About
+      </h2>
+
+      <p>The Ranked Choice Voting Calculator is a web-based tool designed to facilitate the calculation of ranked choice votes involving 3-5 candidates and up to 20 voters. This voting method entails each voter designating their top 3 candidates in sequential order of preference. The tool aggregates these preferences, and if a candidate garners 50% of the total vote, they are declared the winner. In instances where no candidate achieves this threshold, the candidate with the least support is eliminated. Votes initially cast for the eliminated candidate as the first choice are then reallocated to the respective second choice. This process iterates until a candidate secures a majority. The application is tailored for small-scale scenarios, such as team decisions within corporate departments or selecting a movie to watch among friends, among other potential use cases.</p>
+
+      <a href="https://github.com/BrettEastman/RankedChoice">See the source code here</a>
+    </Modal>
+  </div>
+
   <main class="max-w-4xl p-4 m-auto text-center">
     <Stack gutter="gap-12">
       {#if counter === 0}
@@ -245,7 +261,7 @@
         </Split>
         {#if $candidateCount1 > 0 && $voterCount1 > 0}
           <div class="scale-150 mt-4 rounded-s-full">
-            <Button onClick={handleElectionData}>Go to Ballot</Button>
+            <button class="ballot" on:click={handleElectionData}>Go to Ballot</button>
           </div>
         {/if}
       {/if}
@@ -354,11 +370,23 @@
     margin-top: 16px;
   }
 
+  button.about {
+    background-color: white;
+    color: black;
+    padding: 2px 10px;
+  }
+
   #text {
     border: 1px solid white;
     border-radius: 2rem;
     padding: 2px 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     cursor: pointer;
+  }
+  button.about:hover {
+    color: rgb(29 78 216);
+  }
+  button.ballot {
+    padding: 2px 10px;
   }
 </style>
