@@ -34,10 +34,12 @@ The Typewriter component is a customized version of Rich Harris' Typewriter comp
 -->
 
 <label>
-	<input type="checkbox" bind:checked={visible} />
-	Show me who won
+	<div class="text-md mt-8">
+		<input type="checkbox" bind:checked={visible} />
+		Show me who won
+	</div>
 </label>
 
 {#if visible}
-	<p transition:typewriter>{`The winner is ${winner}`}</p>
+	<p class="text-3xl font-bold mt-12" transition:typewriter>{`The winner is "${winner}"`}</p>
 {/if}
