@@ -182,7 +182,7 @@
       Ranked Choice Voting Calculator
     </h1>
     <div class="scale-75">
-      <button class="about" on:click={() => (showModal = true)}>About</button>
+      <button class="about" on:click={() => (showModal = true)}>About this site</button>
     </div>
     <div class="flex flex-col justify-center items-center">
       <Modal bind:showModal>
@@ -377,11 +377,11 @@
     </Stack>
   </main>
 
-  <div slot="bottom" class="flex flex-col justify-center items-center mt-12">
+  <div slot="bottom" class="flex flex-col justify-center items-center mt-24">
     <p
       class="text-sm max-w-max rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
     >
-      <em>by </em><a href="https://www.brettaustineastman.com/" target="_blank"
+      <a href="https://www.brettaustineastman.com/" target="_blank"
         >Brett Austin Eastman</a
       >
     </p>
@@ -409,7 +409,7 @@
   }
 
   button {
-    border: 1px solid;
+    /* border: 1px solid; */
     border-radius: 2rem;
     padding: 0.15rem auto;
     background-color: rgb(59 130 246);
@@ -441,19 +441,20 @@
     background-color: white;
     color: black;
     padding: 2px 10px;
+    box-shadow: none;
   }
 
+  button.about:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+  }
+  button.ballot {
+    padding: 2px 10px;
+  }
   #text {
     border: 1px solid white;
     border-radius: 2rem;
     padding: 2px 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     cursor: pointer;
-  }
-  button.about:hover {
-    color: rgb(29 78 216);
-  }
-  button.ballot {
-    padding: 2px 10px;
   }
 </style>
