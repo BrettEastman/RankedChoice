@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   import { _cx } from '../scripts/_cx.svelte';
   import { getSpacing } from '../scripts/getSpacing.svelte';
 
   export let minHeight = '100vh';
-  export let gutter;
+  export let gutter: string | undefined = 'gap-4';
   export let stretchContent = false;
 
   const wrapperClass = _cx('flex', 'flex-col', gutter);

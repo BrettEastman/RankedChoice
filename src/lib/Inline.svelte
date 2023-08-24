@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { _cx } from '../scripts/_cx.svelte';
   import { getSpacing } from '../scripts/getSpacing.svelte';
 

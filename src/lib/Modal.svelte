@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   import Stack from "./Stack.svelte";
 
-	export let showModal; // boolean
+	export let showModal: boolean;
 
-	let dialog; // HTMLDialogElement
+	let dialog: HTMLDialogElement;
 
 	$: if (dialog && showModal) dialog.showModal();
 </script>
