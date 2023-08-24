@@ -10,7 +10,7 @@
     votersStore,
     electionStore,
     count,
-    numberVoted,
+    didVote,
     winnerStore,
   } from "./utils/stores";
 
@@ -27,6 +27,7 @@
   import Modal from "./lib/Modal.svelte";
 
   let showModal = false;
+  let showGoToBallot = false;
 
   let counter = 0;
   $: counter = $count;
@@ -63,6 +64,7 @@
       const [key, value] = field;
       $votersStore.push(value);
     }
+    showGoToBallot = true;
     console.log("voters:", voters);
   };
 
@@ -80,8 +82,8 @@
     counter++;
   };
 
-  let voted = 0;
-  $: voted = $numberVoted;
+  let voted = false;
+  $: voted = $didVote;
 
   // Add votes from each voter
   const handleVoteSubmit = (e) => {
@@ -98,7 +100,7 @@
         }
       }
     }
-    voted++;
+    voted = true;
     console.log("electionData:", electionData);
   };
 
@@ -111,7 +113,7 @@
   }
 
   const backToHome = () => {
-    numberVoted.set(0);
+    didVote.set(false);
     count.set(0);
     candidateCount1.set(3);
     voterCount1.set(3);
@@ -120,6 +122,8 @@
     electionStore.set([]);
     winnerStore.set("");
     counter = 0;
+    voted = false;
+    showGoToBallot = false;
   };
 
   const candidateCount = tweened(3, {
@@ -175,6 +179,7 @@
 
 <Cover minHeight="50vh" gutter="text-center" stretchContent={true}>
   <div slot="top" class="flex flex-col justify-center items-center mb-8">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <h1
       class="max-w-max px-5 py-2 text-4xl font-bold mt-2.5 mb-2 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer"
       on:click|preventDefault={backToHome}
@@ -218,7 +223,7 @@
   <main class="max-w-4xl p-4 m-auto text-center">
     <Stack gutter="gap-12">
       {#if counter === 0}
-        <Split gutter="gap-24" switchAt="lg">
+        <Split fraction="auto-start" gutter="gap-24" switchAt="md">
           <div>
             <Stack gutter="gap-6">
               <p class="text-xl">How many candidates?</p>
@@ -313,7 +318,7 @@
             </Stack>
           </div>
         </Split>
-        {#if $candidateCount1 > 0 && $voterCount1 > 0}
+        {#if showGoToBallot}
           <div class="scale-125 mt-4 rounded-s-full">
             <button class="ballot" on:click={handleElectionData}
               >Go to Ballot</button
@@ -334,34 +339,34 @@
           {/each}
         </Columns>
 
+        <form on:submit|preventDefault={handleVoteSubmit}>
         {#each $votersStore as voter}
           <h2 class="mt-12">{voter}</h2>
 
           <div class="mb-16">
-            <form on:submit|preventDefault={handleVoteSubmit}>
-              {#each $candidatesStore as candidate, candidateIndex}
-                <PadBox padding={1}>
-                  <div>
-                    <label>
-                      {candidateIndex + 1}:
-                      <input
-                        type="text"
-                        id="text"
-                        name={`${candidateIndex}`}
-                        value=""
-                      />
-                    </label>
-                  </div>
-                </PadBox>
-              {/each}
+            {#each $candidatesStore as candidate, candidateIndex}
+              <PadBox padding={1}>
+                <div>
+                  <label>
+                    {candidateIndex + 1}:
+                    <input
+                      type="text"
+                      id="text"
+                      name={`${candidateIndex}`}
+                      value=""
+                    />
+                  </label>
+                </div>
+              </PadBox>
+            {/each}
 
-              <button class="vote mt-2" id="vote" type="submit">Submit</button>
-            </form>
           </div>
-        {/each}
+          {/each}
+          <button class="vote mt-2" id="vote" type="submit">Submit</button>
+        </form>
 
-        {#if voted >= voters.length}
-          <div class="mb-24 scale-125">
+        {#if voted}
+          <div class="mb-24 mt-16 scale-125">
             <Button onClick={incrementCounter}>Go to final vote</Button>
           </div>
         {/if}
@@ -409,7 +414,6 @@
   }
 
   button {
-    /* border: 1px solid; */
     border-radius: 2rem;
     padding: 0.15rem auto;
     background-color: rgb(59 130 246);
