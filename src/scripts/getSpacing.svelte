@@ -2,10 +2,6 @@
   // Originally authored by Alex Nitta and Brett Eastman
   import spacing from "../utils/spacing.js";
 
-  interface SpacingInput {
-    value: number | number[];
-  }
-
   const getSpacingFromArray = function (arr: number[]) {
     const spacingKeys = Object.keys(spacing);
     const result = arr.reduce((acc, current) => {
@@ -39,7 +35,7 @@
     }
   };
 
-  export function getSpacing(input: SpacingInput) {
+  export function getSpacing(input: number | number[]) {
     if (typeof input === "number") {
       return getSpacingFromNumber(input);
     }
