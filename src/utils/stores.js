@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export const numberVoted = writable(0);
+export const didVote = writable(false);
 export const count = writable(0);
 export const candidateCount1 = writable(3);
 export const voterCount1 = writable(3);
