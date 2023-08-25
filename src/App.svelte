@@ -37,8 +37,9 @@
 
   // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   const handleCandidateSubmit = (e) => {
-    const candidateButton = document.getElementById("candidate");
-    candidateButton.disabled = true;
+    const candidateButton: HTMLElement = document.getElementById("candidate");
+    (document.getElementById("candidate") as HTMLButtonElement).disabled = true;
+
     candidateButton.textContent = "Candidates submitted";
 
     const formData = new FormData(e.target);
@@ -46,7 +47,6 @@
       const [key, value] = field;
       $candidatesStore.push(value);
     }
-    console.log("candidates:", candidates);
   };
 
   let voters = [];
@@ -54,8 +54,9 @@
 
   // same with voters
   const handleVoterSubmit = (e) => {
-    const voterButton = document.getElementById("voter");
-    voterButton.disabled = true;
+    const voterButton: HTMLElement = document.getElementById("voter");
+    (document.getElementById("voter") as HTMLButtonElement).disabled = true;
+
     voterButton.textContent = "Voters submitted";
 
     const formData = new FormData(e.target);
@@ -65,7 +66,6 @@
       $votersStore.push(value);
     }
     showGoToBallot = true;
-    console.log("voters:", voters);
   };
 
   // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and an array of three zeros for votes
@@ -87,8 +87,9 @@
 
   // Add votes from each voter
   const handleVoteSubmit = (e) => {
-    const voteButton = document.getElementById("vote");
-    voteButton.disabled = true;
+    const voteButton: HTMLElement = document.getElementById("vote");
+    (document.getElementById("vote") as HTMLButtonElement).disabled = true;
+
     voteButton.textContent = "Submitted";
 
     const formData = new FormData(e.target);
@@ -101,7 +102,6 @@
       }
     }
     voted = true;
-    console.log("electionData:", electionData);
   };
 
   let winner = "";
@@ -187,7 +187,9 @@
       Ranked Choice Voting Calculator
     </h1>
     <div class="scale-75">
-      <button class="about" on:click={() => (showModal = true)}>About this site</button>
+      <button class="about" on:click={() => (showModal = true)}
+        >About this site</button
+      >
     </div>
     <div class="flex flex-col justify-center items-center">
       <Modal bind:showModal>
@@ -340,27 +342,26 @@
         </Columns>
 
         <form on:submit|preventDefault={handleVoteSubmit}>
-        {#each $votersStore as voter}
-          <h2 class="mt-12">{voter}</h2>
+          {#each $votersStore as voter}
+            <h2 class="mt-12">{voter}</h2>
 
-          <div class="mb-16">
-            {#each $candidatesStore as candidate, candidateIndex}
-              <PadBox padding={1}>
-                <div>
-                  <label>
-                    {candidateIndex + 1}:
-                    <input
-                      type="text"
-                      id="text"
-                      name={`${candidateIndex}`}
-                      value=""
-                    />
-                  </label>
-                </div>
-              </PadBox>
-            {/each}
-
-          </div>
+            <div class="mb-16">
+              {#each $candidatesStore as candidate, candidateIndex}
+                <PadBox padding={1}>
+                  <div>
+                    <label>
+                      {candidateIndex + 1}:
+                      <input
+                        type="text"
+                        id="text"
+                        name={`${candidateIndex}`}
+                        value=""
+                      />
+                    </label>
+                  </div>
+                </PadBox>
+              {/each}
+            </div>
           {/each}
           <button class="vote mt-2" id="vote" type="submit">Submit</button>
         </form>

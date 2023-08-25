@@ -1,4 +1,5 @@
 <script context="module">
+  var hasOwn = {}.hasOwnProperty;
   export function _cx() {
     var classes = [];
 
@@ -12,7 +13,7 @@
         classes.push(arg);
       } else if (Array.isArray(arg)) {
         if (arg.length) {
-          var inner = classNames.apply(null, arg);
+          var inner = _cx.apply(null, arg);
           if (inner) {
             classes.push(inner);
           }
