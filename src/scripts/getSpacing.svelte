@@ -47,3 +47,9 @@
     console.error("Input must be a number or an array of numbers.");
   }
 </script>
+
+<!--
+@component
+The getSpacing script is a utility for conditionally returning the correct CSS attribute value from user input of either a single number or an array of numbers.
+
+-->
