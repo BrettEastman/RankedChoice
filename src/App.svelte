@@ -214,7 +214,7 @@
         </p>
 
         <a
-          class="rounded-full font-bold hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer"
+          class="rounded-full font-bold hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer text-center"
           href="https://github.com/BrettEastman/RankedChoice"
           >See the source code here</a
         >
