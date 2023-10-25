@@ -138,55 +138,55 @@
 
   function incrementCandidate() {
     if ($candidateCount1 < 5) {
-      candidateCount.update((n) => n + 1);
       $candidateCount1 += 1;
+      candidateCount.update((n) => n + 1);
     }
   }
 
   function decrementCandidate() {
     if ($candidateCount1 > 2) {
-      candidateCount.update((n) => n - 1);
       $candidateCount1 -= 1;
+      candidateCount.update((n) => n - 1);
     }
   }
 
   function resetCandidate() {
-    candidateCount.set(3);
     $candidateCount1 = 3;
+    candidateCount.set(3);
   }
 
   function incrementVoter() {
     if ($voterCount1 < 20) {
-      voterCount.update((n) => n + 1);
       $voterCount1 += 1;
+      voterCount.update((n) => n + 1);
     }
   }
 
   function decrementVoter() {
     if ($voterCount1 > 3) {
-      voterCount.update((n) => n - 1);
       $voterCount1 -= 1;
+      voterCount.update((n) => n - 1);
     }
   }
 
   function resetVoter() {
-    voterCount.set(3);
     $voterCount1 = 3;
+    voterCount.set(3);
   }
 </script>
 
 <TailwindCss />
 
-<Cover minHeight="50vh" gutter="text-center" stretchContent={true}>
+<Cover minHeight="50vh" stretchContent={true}>
   <div slot="top" class="flex flex-col justify-center items-center mb-8">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <h1
-      class="max-w-max px-5 py-2 text-4xl font-bold mt-2.5 mb-2 rounded-full hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer"
+      class="max-w-max px-5 py-2 text-[2.5rem] font-bold mt-2.5 mb-2 cursor-pointer text-center"
       on:click|preventDefault={backToHome}
     >
       Ranked Choice Voting Calculator
     </h1>
-    <div class="scale-75">
+    <div class="scale-75 pt-4">
       <button class="about" on:click={() => (showModal = true)}
         >About this site</button
       >
@@ -266,8 +266,10 @@
                       </label>
                     </PadBox>
                   {/each}
-                  <button class="candidate" id="candidate" type="submit"
-                    >Submit Candidate Names</button
+                  <button
+                    class="candidate border border-solid border-white"
+                    id="candidate"
+                    type="submit">Submit Candidate Names</button
                   >
                 </Stack>
               </form>
@@ -312,8 +314,10 @@
                       </label>
                     </PadBox>
                   {/each}
-                  <button class="voter" id="voter" type="submit"
-                    >Submit Voter Names</button
+                  <button
+                    class="voter border border-solid border-white"
+                    id="voter"
+                    type="submit">Submit Voter Names</button
                   >
                 </Stack>
               </form>
@@ -321,7 +325,7 @@
           </div>
         </Split>
         {#if showGoToBallot}
-          <div class="scale-125 mt-4 rounded-s-full">
+          <div class="scale-125 mt-4 rounded-s-full transition-all">
             <button class="ballot" on:click={handleElectionData}
               >Go to Ballot</button
             >
@@ -332,11 +336,11 @@
 
     <Stack gutter="gap-2">
       {#if counter === 1}
-        <h1 class="text-3xl font-bold mb-8">Candidates</h1>
+        <h2 class="text-2xl font-bold mb-8">Vote for these candidates</h2>
         <Columns columns={$candidateCount} switchAt="sm">
           {#each $electionStore as candidate}
-            <div class="text-2xl font-bold">
-              <h2>{candidate.name}</h2>
+            <div>
+              <h1 class="text-2xl font-bold">{candidate.name}</h1>
             </div>
           {/each}
         </Columns>
@@ -345,7 +349,7 @@
           {#each $votersStore as voter}
             <h2 class="mt-12">{voter}</h2>
 
-            <div class="mb-16">
+            <div class="mb-12">
               {#each $candidatesStore as candidate, candidateIndex}
                 <PadBox padding={1}>
                   <div>
@@ -383,9 +387,12 @@
     </Stack>
   </main>
 
-  <div slot="bottom" class="flex flex-col justify-center items-center mt-24">
+  <div
+    slot="bottom"
+    class="flex flex-col justify-center items-center mt-16 mb-16"
+  >
     <p
-      class="text-sm max-w-max rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
+      class="text-sm max-w-max bg-white rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
     >
       <a href="https://www.brettaustineastman.com/" target="_blank"
         >Brett Austin Eastman</a
@@ -395,6 +402,10 @@
 </Cover>
 
 <style>
+  h1 {
+    font-family: "Chivo Mono", monospace;
+    letter-spacing: 0.2rem;
+  }
   progress {
     display: flex;
     flex-direction: column;
