@@ -29,7 +29,7 @@ https://svelte.dev/examples/modal
       <slot />
       <hr />
       <!-- svelte-ignore a11y-autofocus -->
-      <button autofocus on:click={() => dialog.close()}>close modal</button>
+      <button autofocus on:click={() => dialog.close()}>close</button>
     </Stack>
   </div>
 </dialog>
@@ -40,6 +40,7 @@ https://svelte.dev/examples/modal
     border-radius: 0.2em;
     border: none;
     padding: 0;
+    background: aliceblue;
   }
   dialog::backdrop {
     background: rgba(0, 0, 0, 0.3);
