@@ -75,10 +75,9 @@ https://svelte.dev/examples/modal
     color: black;
     border-radius: 2rem;
     padding: 2px 10px;
-    border: 1px solid;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+    box-shadow: none;
   }
   button:hover {
-    box-shadow: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
   }
 </style>

@@ -2,7 +2,20 @@
 
 ## About
 
-The Ranked Choice Voting Calculator is a web-based tool designed to facilitate the calculation of ranked choice votes involving 3-5 candidates and up to 20 voters. This voting method entails each voter designating their top 3 candidates in sequential order of preference. The tool aggregates these preferences, and if a candidate garners 50% of the total vote, they are declared the winner. In instances where no candidate achieves this threshold, the candidate with the least support is eliminated. Votes initially cast for the eliminated candidate as the first choice are then reallocated to the respective second choice. This process iterates until a candidate secures a majority. The application is tailored for small-scale scenarios, such as team decisions within corporate departments or selecting a movie to watch among friends, among other potential use cases.
+The Ranked Choice Voting Calculator is a single page web application
+designed to facilitate the tally of a ranked choice vote involving 3-5
+candidates and up to 20 voters. This voting method entails each voter
+designating their top 3 candidates in sequential order of preference.
+The tool aggregates these preferences, and if a candidate garners more
+than 50% of the total vote, they are declared the winner. In instances
+where no candidate achieves this, the candidate with the least support
+is eliminated. Votes initially cast for the eliminated candidate as
+the first choice are then reallocated to the respective second choice.
+This process iterates until a candidate secures a majority. The
+application is tailored for small-scale scenarios, such as voting on
+team decisions at the office or selecting a movie to watch among
+friends. Get 5 people to vote on a top 3 list of albums to listen to
+and see which one wins!
 
 [Try it for yourself!](https://ranked-choice-three.vercel.app/)
 
@@ -15,4 +28,3 @@ The Ranked Choice Voting Calculator is a web-based tool designed to facilitate t
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
-

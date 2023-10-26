@@ -14,6 +14,10 @@
     winnerStore,
   } from "./utils/stores";
 
+  import githubIcon from "./icons/github-142-svgrepo-com.svg?raw";
+  import instagramIcon from "./icons/instagram-svgrepo-com.svg?raw";
+  import linkedinIcon from "./icons/linkedin-rounded-svgrepo-com.svg?raw";
+
   import { calculateWinner } from "./scripts/calculateWinner.svelte";
 
   import Button from "./lib/Button.svelte";
@@ -198,25 +202,26 @@
         </h2>
 
         <p class="text-left">
-          The Ranked Choice Voting Calculator is a web-based tool designed to
-          facilitate the calculation of ranked choice votes involving 3-5
+          The Ranked Choice Voting Calculator is a single page web application
+          designed to facilitate the tally of a ranked choice vote involving 3-5
           candidates and up to 20 voters. This voting method entails each voter
           designating their top 3 candidates in sequential order of preference.
-          The tool aggregates these preferences, and if a candidate garners 50%
-          of the total vote, they are declared the winner. In instances where no
-          candidate achieves this threshold, the candidate with the least
-          support is eliminated. Votes initially cast for the eliminated
-          candidate as the first choice are then reallocated to the respective
-          second choice. This process iterates until a candidate secures a
-          majority. The application is tailored for small-scale scenarios, such
-          as team decisions within corporate departments or selecting a movie to
-          watch among friends, among other potential use cases.
+          The tool aggregates these preferences, and if a candidate garners more
+          than 50% of the total vote, they are declared the winner. In instances
+          where no candidate achieves this, the candidate with the least support
+          is eliminated. Votes initially cast for the eliminated candidate as
+          the first choice are then reallocated to the respective second choice.
+          This process iterates until a candidate secures a majority. The
+          application is tailored for small-scale scenarios, such as voting on
+          team decisions at the office or selecting a movie to watch among
+          friends. Get 5 people to vote on a top 3 list of albums to listen to
+          and see which one wins!
         </p>
 
         <a
           class="rounded-full font-bold hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer text-center"
           href="https://github.com/BrettEastman/RankedChoice"
-          >See the source code here</a
+          target="_blank">See the source code here</a
         >
       </Modal>
     </div>
@@ -231,14 +236,14 @@
               <p class="text-xl">How many candidates?</p>
 
               <h2 class="text-lg font-bold">
-                Candidates: {Math.floor($candidateCount)}
+                Candidates: {Math.floor($candidateCount1)}
               </h2>
 
               <div class="text-xl">
                 <Inline gutter="gap-4" justify="justify-center">
                   <Button onClick={incrementCandidate}>+</Button>
                   <Button onClick={decrementCandidate}>-</Button>
-                  <Button onClick={resetCandidate} color="bg-red-500">
+                  <Button onClick={resetCandidate} color="bg-[#a7393d]">
                     Reset
                   </Button>
                 </Inline>
@@ -246,7 +251,7 @@
 
               <Stack gutter="gap-2">
                 <label for="candidateProg"
-                  >Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label
+                  >Up to 5: {Math.floor(($candidateCount1 / 5) * 100)}%</label
                 >
                 <progress id="candidateProg" max="5" value={$candidateCount} />
               </Stack>
@@ -281,20 +286,22 @@
               <p class="text-xl">How many voters?</p>
 
               <h2 class="text-lg font-bold">
-                Voters: {Math.ceil($voterCount)}
+                Voters: {Math.ceil($voterCount1)}
               </h2>
 
               <div class="text-xl">
                 <Inline gutter="gap-4" justify="justify-center">
                   <Button onClick={incrementVoter}>+</Button>
                   <Button onClick={decrementVoter}>-</Button>
-                  <Button onClick={resetVoter} color="bg-red-500">Reset</Button>
+                  <Button onClick={resetVoter} color="bg-[#a7393d]"
+                    >Reset</Button
+                  >
                 </Inline>
               </div>
 
               <Stack gutter="gap-2">
                 <label for="voterprog"
-                  >Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label
+                  >Up to 20: {Math.floor(($voterCount1 / 20) * 100)}%</label
                 >
                 <progress id="voterprog" max="20" value={$voterCount} />
               </Stack>
@@ -389,7 +396,7 @@
 
   <div
     slot="bottom"
-    class="flex flex-col justify-center items-center mt-16 mb-16"
+    class="flex flex-col justify-center items-center gap-10 mt-16 mb-16"
   >
     <p
       class="text-sm max-w-max bg-white rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
@@ -398,6 +405,29 @@
         >Brett Austin Eastman</a
       >
     </p>
+    <Inline justify="justify-center" align="items-center">
+      <a class="flex justify-center" href="https://github.com/BrettEastman">
+        <span>
+          {@html githubIcon}
+        </span>
+      </a>
+      <a
+        class="flex justify-center"
+        href="https://www.linkedin.com/in/brett-austin-eastman/"
+      >
+        <span>
+          {@html linkedinIcon}
+        </span>
+      </a>
+      <a
+        class="flex justify-center"
+        href="https://www.instagram.com/brettaustineastman/"
+      >
+        <span>
+          {@html instagramIcon}
+        </span>
+      </a>
+    </Inline>
   </div>
 </Cover>
 
