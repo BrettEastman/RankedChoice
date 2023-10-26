@@ -59,14 +59,6 @@
 @component
 The calculateWinner script is a utility for calculating the winner of an election using the Single Transferable Vote method. It is based on the logic from this article: http://www.moray.gov.uk/moray_standard/page_68268.html
 
-Candidate is a Typescript interface which defines what a Candidate object looks like:
-  It has a name property that is a string
-  It has a votes property that is an array of numbers
-  Each index in the array is the number of votes in that round
-
-calculateWinner is a function which calculates the winner given an array of Candidates
-  First, we make a copy of the candidateData array so we don't modify the original, then we calculate the total number of votes across all candidates.
-
   The findLowestCandidateIndex function finds the candidate with the lowest number of votes in a given round
     Initialize variables to track the lowest index and lowest vote count
     Return the index of the lowest candidate
