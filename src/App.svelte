@@ -117,17 +117,7 @@
   }
 
   const backToHome = () => {
-    didVote.set(false);
-    count.set(0);
-    candidateCount1.set(3);
-    voterCount1.set(3);
-    candidatesStore.set([]);
-    votersStore.set([]);
-    electionStore.set([]);
-    winnerStore.set("");
-    counter = 0;
-    voted = false;
-    showGoToBallot = false;
+    document.location.reload();
   };
 
   const candidateCount = tweened(3, {
@@ -406,7 +396,11 @@
       >
     </p>
     <Inline justify="justify-center" align="items-center">
-      <a class="flex justify-center" href="https://github.com/BrettEastman">
+      <a
+        class="flex justify-center"
+        href="https://github.com/BrettEastman"
+        target="_blank"
+      >
         <span>
           {@html githubIcon}
         </span>
@@ -414,6 +408,7 @@
       <a
         class="flex justify-center"
         href="https://www.linkedin.com/in/brett-austin-eastman/"
+        target="_blank"
       >
         <span>
           {@html linkedinIcon}
@@ -422,6 +417,7 @@
       <a
         class="flex justify-center"
         href="https://www.instagram.com/brettaustineastman/"
+        target="_blank"
       >
         <span>
           {@html instagramIcon}

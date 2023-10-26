@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
 export const didVote = writable(false);
 export const count = writable(0);
@@ -7,9 +7,9 @@ export const voterCount1 = writable(3);
 export const candidatesStore = writable([]);
 export const votersStore = writable([]);
 export const electionStore = writable([]);
-export const winnerStore = writable('');
+export const winnerStore = writable("");
 
-// // Example data:
+// Example data:
 // const electionStore = [
 //   { name: 'blue', votes: [5, 8, 7] },
 //   { name: 'purple', votes: [7, 8, 5] },
