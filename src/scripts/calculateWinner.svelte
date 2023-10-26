@@ -59,29 +59,6 @@
 @component
 The calculateWinner script is a utility for calculating the winner of an election using the Single Transferable Vote method. It is based on the logic from this article: http://www.moray.gov.uk/moray_standard/page_68268.html
 
-  The findLowestCandidateIndex function finds the candidate with the lowest number of votes in a given round
-    Initialize variables to track the lowest index and lowest vote count
-    Return the index of the lowest candidate
-
-  Initialize round counter to keep track of what round we are in
-
-  Keep looping until only 1 candidate remains
-
-    Initialize variables to track highest vote count and majority winner
-
-    Loop through candidates
-      Get current tally for this candidate
-      Check if this candidate has a majority (>50%) of the votes
-      If it's a majority and the highest so far, set as majorityWinner
-
-    If we found a majority winner, return their name
-
-    Otherwise, find lowest candidate and remove them from the data array
-
-    Add the eliminated candidate's votes to the others
-
-    Increment round counter
-
-  If no majority winner, return the last candidate left
+The findLowestCandidateIndex helper function finds the candidate with the lowest number of votes in a given round.
 
 -->

@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-  // Originally authored by Alex Nitta and Brett Eastman
   import spacing from "../utils/spacing.js";
 
   const getSpacingFromArray = function (arr: number[]) {
@@ -50,6 +49,6 @@
 
 <!--
 @component
-The getSpacing script is a utility for conditionally returning the correct CSS attribute value from user input of either a single number or an array of numbers.
+The getSpacing script is a utility for conditionally returning the correct CSS attribute value from user input of either a single number or an array of numbers. Adapted from component library originally developed by Brett Eastman and Alex Nitta.
 
 -->
