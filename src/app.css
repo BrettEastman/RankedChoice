@@ -2,7 +2,9 @@
 
 :root {
   --primary: #5c73c4;
+  --primary-dark: #1d4ed8;
   --secondary: #a7393d;
+  --secondary-dark: #7c2d32;
 }
 
 /* Use a more-intuitive box-sizing model.*/

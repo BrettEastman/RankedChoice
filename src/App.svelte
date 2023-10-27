@@ -233,7 +233,10 @@
                 <Inline gutter="gap-4" justify="justify-center">
                   <Button onClick={incrementCandidate}>+</Button>
                   <Button onClick={decrementCandidate}>-</Button>
-                  <Button onClick={resetCandidate} color="bg-secondary">
+                  <Button
+                    onClick={resetCandidate}
+                    color="bg-secondary hover:bg-secondaryDark"
+                  >
                     Reset
                   </Button>
                 </Inline>
@@ -241,7 +244,7 @@
 
               <Stack gutter="gap-2">
                 <label for="candidateProg"
-                  >Up to 5: {Math.floor(($candidateCount1 / 5) * 100)}%</label
+                  >Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label
                 >
                 <progress id="candidateProg" max="5" value={$candidateCount} />
               </Stack>
@@ -283,15 +286,16 @@
                 <Inline gutter="gap-4" justify="justify-center">
                   <Button onClick={incrementVoter}>+</Button>
                   <Button onClick={decrementVoter}>-</Button>
-                  <Button onClick={resetVoter} color="bg-secondary"
-                    >Reset</Button
+                  <Button
+                    onClick={resetVoter}
+                    color="bg-secondary hover:bg-secondaryDark">Reset</Button
                   >
                 </Inline>
               </div>
 
               <Stack gutter="gap-2">
                 <label for="voterprog"
-                  >Up to 20: {Math.floor(($voterCount1 / 20) * 100)}%</label
+                  >Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label
                 >
                 <progress id="voterprog" max="20" value={$voterCount} />
               </Stack>
@@ -389,7 +393,7 @@
     class="flex flex-col justify-center items-center gap-10 mt-16 mb-16"
   >
     <p
-      class="text-sm max-w-max bg-white rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
+      class="text-sm max-w-max bg-white font-bold rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
     >
       <a href="https://www.brettaustineastman.com/" target="_blank"
         >Brett Austin Eastman</a
@@ -457,9 +461,10 @@
     background-color: var(--primary);
     color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+    font-weight: 700;
   }
   button:hover {
-    background-color: rgb(29 78 216);
+    background-color: var(--primary-dark);
   }
   button:disabled {
     border: 1px solid #999999;
