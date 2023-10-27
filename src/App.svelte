@@ -233,7 +233,7 @@
                 <Inline gutter="gap-4" justify="justify-center">
                   <Button onClick={incrementCandidate}>+</Button>
                   <Button onClick={decrementCandidate}>-</Button>
-                  <Button onClick={resetCandidate} color="bg-[#a7393d]">
+                  <Button onClick={resetCandidate} color="bg-secondary">
                     Reset
                   </Button>
                 </Inline>
@@ -283,7 +283,7 @@
                 <Inline gutter="gap-4" justify="justify-center">
                   <Button onClick={incrementVoter}>+</Button>
                   <Button onClick={decrementVoter}>-</Button>
-                  <Button onClick={resetVoter} color="bg-[#a7393d]"
+                  <Button onClick={resetVoter} color="bg-secondary"
                     >Reset</Button
                   >
                 </Inline>
@@ -447,14 +447,14 @@
     border-radius: 2rem;
   }
   progress::-webkit-progress-value {
-    background-color: rgb(92, 115, 196);
+    background-color: var(--primary);
     border-radius: 2rem;
   }
 
   button {
     border-radius: 2rem;
     padding: 0.15rem auto;
-    background-color: rgb(59 130 246);
+    background-color: var(--primary);
     color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
   }

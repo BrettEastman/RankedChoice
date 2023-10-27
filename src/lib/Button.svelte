@@ -1,8 +1,8 @@
 <script>
-  export let color = 'bg-blue-500';
+  export let color = "bg-primary hover:bg-primary-dark";
 
   export let onClick = function () {
-      // Click handler goes here
+    // Click handler goes here
   };
 </script>
 
