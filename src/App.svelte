@@ -238,7 +238,7 @@
                 </Inline>
               </div>
 
-              <Stack gutter="gap-2">
+              <Stack gutter="gap-2 items-center">
                 <label for="candidateProg"
                   >Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label
                 >
@@ -246,7 +246,7 @@
               </Stack>
 
               <form on:submit|preventDefault={handleCandidateSubmit}>
-                <Stack gutter="gap-0.5">
+                <Stack gutter="gap-0.5 items-center">
                   {#each Array($candidateCount1) as _, candidateIndex}
                     <PadBox padding={1}>
                       <label>
@@ -261,7 +261,7 @@
                     </PadBox>
                   {/each}
                   <button
-                    class="candidate border border-solid border-white"
+                    class="candidate border border-solid border-white w-full max-w-sm"
                     id="candidate"
                     type="submit">Submit Candidate Names</button
                   >
@@ -289,7 +289,7 @@
                 </Inline>
               </div>
 
-              <Stack gutter="gap-2">
+              <Stack gutter="gap-2 items-center">
                 <label for="voterprog"
                   >Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label
                 >
@@ -297,7 +297,7 @@
               </Stack>
 
               <form on:submit|preventDefault={handleVoterSubmit}>
-                <Stack gutter="gap-0.5">
+                <Stack gutter="gap-0.5 items-center">
                   {#each Array($voterCount1) as _, voterIndex}
                     <PadBox padding={1}>
                       <label>
@@ -312,7 +312,7 @@
                     </PadBox>
                   {/each}
                   <button
-                    class="voter border border-solid border-white"
+                    class="voter border border-solid border-white w-full max-w-sm"
                     id="voter"
                     type="submit">Submit Voter Names</button
                   >
@@ -439,6 +439,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     border-radius: 2rem;
     width: 100%;
+    max-width: 24rem;
     height: 15px;
     border: 1px solid white;
   }
