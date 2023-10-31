@@ -39,7 +39,6 @@
   let candidates = [];
   $: candidates = $candidatesStore;
 
-  // increment the number of candidates which will trigger a re-render of the form with the current number of slots to input candidate names
   const handleCandidateSubmit = (e) => {
     const candidateButton: HTMLElement = document.getElementById("candidate");
     (document.getElementById("candidate") as HTMLButtonElement).disabled = true;
@@ -56,7 +55,6 @@
   let voters = [];
   $: voters = $votersStore;
 
-  // same with voters
   const handleVoterSubmit = (e) => {
     const voterButton: HTMLElement = document.getElementById("voter");
     (document.getElementById("voter") as HTMLButtonElement).disabled = true;
@@ -72,7 +70,6 @@
     showGoToBallot = true;
   };
 
-  // the handleSubmit function will then process the form data and add the candidate names to the candidateData store - one object for each candidate with the candidate name and an array of three zeros for votes
   let electionData = [];
   $: electionData = $electionStore;
 
@@ -89,7 +86,6 @@
   let voted = false;
   $: voted = $didVote;
 
-  // Add votes from each voter
   const handleVoteSubmit = (e) => {
     const voteButton: HTMLElement = document.getElementById("vote");
     (document.getElementById("vote") as HTMLButtonElement).disabled = true;
@@ -175,7 +171,7 @@
   <div slot="top" class="flex flex-col justify-center items-center mb-8">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <h1
-      class="max-w-max px-5 py-2 text-[2.5rem] font-bold mt-2.5 mb-2 cursor-pointer text-center"
+      class="max-w-max px-5 py-2 text-[2.2rem] font-bold mt-2.5 mb-2 cursor-pointer text-center md:text-[2.8rem]"
       on:click|preventDefault={backToHome}
     >
       Ranked Choice Voting Calculator
