@@ -205,7 +205,7 @@
         </p>
 
         <a
-          class="rounded-full font-bold hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer text-center"
+          class="rounded-full font-bold hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] cursor-pointer text-center duration-300"
           href="https://github.com/BrettEastman/RankedChoice"
           target="_blank">See the source code here</a
         >
@@ -227,18 +227,23 @@
 
               <div class="text-xl">
                 <Inline gutter="gap-4" justify="justify-center">
-                  <Button onClick={incrementCandidate}>+</Button>
-                  <Button onClick={decrementCandidate}>-</Button>
+                  <Button onClick={incrementCandidate} addClass="duration-300"
+                    >+</Button
+                  >
+                  <Button onClick={decrementCandidate} addClass="duration-300"
+                    >-</Button
+                  >
                   <Button
                     onClick={resetCandidate}
-                    color="bg-secondary hover:bg-secondaryDark"
+                    color="bg-secondary hover:bg-secondaryLight"
+                    addClass="duration-300"
                   >
                     Reset
                   </Button>
                 </Inline>
               </div>
 
-              <Stack gutter="gap-2">
+              <Stack gutter="gap-2" addClass="items-center">
                 <label for="candidateProg"
                   >Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label
                 >
@@ -246,7 +251,7 @@
               </Stack>
 
               <form on:submit|preventDefault={handleCandidateSubmit}>
-                <Stack gutter="gap-0.5">
+                <Stack gutter="gap-0.5" addClass="items-center">
                   {#each Array($candidateCount1) as _, candidateIndex}
                     <PadBox padding={1}>
                       <label>
@@ -261,7 +266,7 @@
                     </PadBox>
                   {/each}
                   <button
-                    class="candidate border border-solid border-white"
+                    class="candidate border border-solid border-white w-full max-w-sm"
                     id="candidate"
                     type="submit">Submit Candidate Names</button
                   >
@@ -280,16 +285,21 @@
 
               <div class="text-xl">
                 <Inline gutter="gap-4" justify="justify-center">
-                  <Button onClick={incrementVoter}>+</Button>
-                  <Button onClick={decrementVoter}>-</Button>
+                  <Button onClick={incrementVoter} addClass="duration-300"
+                    >+</Button
+                  >
+                  <Button onClick={decrementVoter} addClass="duration-300"
+                    >-</Button
+                  >
                   <Button
                     onClick={resetVoter}
-                    color="bg-secondary hover:bg-secondaryDark">Reset</Button
+                    color="bg-secondary hover:bg-secondaryLight"
+                    addClass="duration-300">Reset</Button
                   >
                 </Inline>
               </div>
 
-              <Stack gutter="gap-2">
+              <Stack gutter="gap-2" addClass="items-center">
                 <label for="voterprog"
                   >Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label
                 >
@@ -297,7 +307,7 @@
               </Stack>
 
               <form on:submit|preventDefault={handleVoterSubmit}>
-                <Stack gutter="gap-0.5">
+                <Stack gutter="gap-0.5" addClass="items-center">
                   {#each Array($voterCount1) as _, voterIndex}
                     <PadBox padding={1}>
                       <label>
@@ -312,7 +322,7 @@
                     </PadBox>
                   {/each}
                   <button
-                    class="voter border border-solid border-white"
+                    class="voter border border-solid border-white w-full max-w-sm"
                     id="voter"
                     type="submit">Submit Voter Names</button
                   >
@@ -389,7 +399,7 @@
     class="flex flex-col justify-center items-center gap-10 mt-16 mb-16"
   >
     <p
-      class="text-sm max-w-max bg-white font-bold rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px]"
+      class="text-sm max-w-max bg-white font-bold rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] duration-300"
     >
       <a href="https://www.brettaustineastman.com/" target="_blank"
         >Brett Austin Eastman</a
@@ -439,6 +449,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     border-radius: 2rem;
     width: 100%;
+    max-width: 24rem;
     height: 15px;
     border: 1px solid white;
   }
@@ -458,14 +469,17 @@
     color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     font-weight: 700;
+    transition-duration: 300ms;
   }
   button:hover {
     background-color: var(--primary-dark);
+    transition-duration: 300ms;
   }
   button:disabled {
     border: 1px solid #999999;
     background-color: #cccccc;
     color: #666666;
+    transition-duration: 300ms;
   }
 
   button.vote {
@@ -489,6 +503,7 @@
 
   button.about:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+    transition-duration: 300ms;
   }
   button.ballot {
     padding: 2px 10px;
