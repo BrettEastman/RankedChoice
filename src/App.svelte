@@ -235,7 +235,7 @@
                   >
                   <Button
                     onClick={resetCandidate}
-                    color="bg-secondary hover:bg-secondaryDark"
+                    color="bg-secondary hover:bg-secondaryLight"
                     addClass="duration-300"
                   >
                     Reset
@@ -293,7 +293,7 @@
                   >
                   <Button
                     onClick={resetVoter}
-                    color="bg-secondary hover:bg-secondaryDark"
+                    color="bg-secondary hover:bg-secondaryLight"
                     addClass="duration-300">Reset</Button
                   >
                 </Inline>
