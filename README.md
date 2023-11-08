@@ -1,4 +1,4 @@
-# Ranked Choice Voting Calculator
+<img width="1000" alt="Screenshot 2023-11-07 at 6 01 49 PM" src="https://github.com/BrettEastman/RankedChoice/assets/76603041/544458e5-2043-432e-bd8c-f4dfebac1351">
 
 ## About
 
