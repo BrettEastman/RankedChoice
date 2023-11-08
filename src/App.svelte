@@ -86,15 +86,23 @@
   let voted = false;
   $: voted = $didVote;
 
+  const nameNotInElectionData = (name) => {
+    for (let candidate of electionData) {
+      if (candidate.name === name) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleVoteSubmit = (e) => {
-    const voteButton: HTMLElement = document.getElementById("vote");
-    (document.getElementById("vote") as HTMLButtonElement).disabled = true;
-
-    voteButton.textContent = "Submitted";
-
     const formData = new FormData(e.target);
     for (let field of formData) {
       const [key, value] = field;
+      if (nameNotInElectionData(value)) {
+        alert("Please enter a valid candidate name");
+        return;
+      }
       for (let result of electionData) {
         if (result.name === value) {
           result.votes[key]++;
@@ -102,6 +110,12 @@
       }
     }
     voted = true;
+    const voteButton: HTMLElement = document.getElementById("vote");
+    (document.getElementById("vote") as HTMLButtonElement).disabled = true;
+
+    voteButton.textContent = "Submitted";
+
+    document.getElementById("vote").scrollIntoView({ behavior: "smooth" });
   };
 
   let winner = "";
@@ -218,10 +232,10 @@
       {#if counter === 0}
         <Split fraction="auto-start" gutter="gap-24" switchAt="md">
           <div>
-            <Stack gutter="gap-6">
-              <p class="text-xl">How many candidates?</p>
+            <Stack gutter="gap-5">
+              <p class="text-xl">Select number of candidates:</p>
 
-              <h2 class="text-lg font-bold">
+              <h2 class="text-md font-bold">
                 Candidates: {Math.floor($candidateCount1)}
               </h2>
 
@@ -243,7 +257,7 @@
                 </Inline>
               </div>
 
-              <Stack gutter="gap-2" addClass="items-center">
+              <Stack gutter="gap-2" addClass="items-center mb-4">
                 <label for="candidateProg"
                   >Up to 5: {Math.floor(($candidateCount / 5) * 100)}%</label
                 >
@@ -251,7 +265,8 @@
               </Stack>
 
               <form on:submit|preventDefault={handleCandidateSubmit}>
-                <Stack gutter="gap-0.5" addClass="items-center">
+                <Stack gutter="gap-2" addClass="items-center">
+                  <p class="text-lg">Write name of each candidate:</p>
                   {#each Array($candidateCount1) as _, candidateIndex}
                     <PadBox padding={1}>
                       <label>
@@ -261,6 +276,7 @@
                           id="text"
                           name={`candidate${candidateIndex}`}
                           value=""
+                          required
                         />
                       </label>
                     </PadBox>
@@ -276,10 +292,10 @@
           </div>
 
           <div>
-            <Stack gutter="gap-6">
-              <p class="text-xl">How many voters?</p>
+            <Stack gutter="gap-5">
+              <p class="text-xl">Select number of voters:</p>
 
-              <h2 class="text-lg font-bold">
+              <h2 class="text-md font-bold">
                 Voters: {Math.ceil($voterCount1)}
               </h2>
 
@@ -299,7 +315,7 @@
                 </Inline>
               </div>
 
-              <Stack gutter="gap-2" addClass="items-center">
+              <Stack gutter="gap-2" addClass="items-center mb-4">
                 <label for="voterprog"
                   >Up to 20: {Math.floor(($voterCount / 20) * 100)}%</label
                 >
@@ -307,7 +323,8 @@
               </Stack>
 
               <form on:submit|preventDefault={handleVoterSubmit}>
-                <Stack gutter="gap-0.5" addClass="items-center">
+                <Stack gutter="gap-2" addClass="items-center">
+                  <p class="text-lg">Write name of each voter:</p>
                   {#each Array($voterCount1) as _, voterIndex}
                     <PadBox padding={1}>
                       <label>
@@ -317,6 +334,7 @@
                           id="text"
                           name={`voter${voterIndex}`}
                           value=""
+                          required
                         />
                       </label>
                     </PadBox>
@@ -367,6 +385,7 @@
                         id="text"
                         name={`${candidateIndex}`}
                         value=""
+                        required
                       />
                     </label>
                   </div>
@@ -378,7 +397,7 @@
         </form>
 
         {#if voted}
-          <div class="mb-24 mt-16 scale-125">
+          <div class="mb-24 mt-12 scale-125">
             <Button onClick={incrementCounter}>Go to final vote</Button>
           </div>
         {/if}
@@ -442,6 +461,7 @@
     font-family: "Chivo Mono", monospace;
     letter-spacing: 0.2rem;
   }
+
   progress {
     display: flex;
     flex-direction: column;
@@ -453,10 +473,12 @@
     height: 15px;
     border: 1px solid white;
   }
+
   progress::-webkit-progress-bar {
     background-color: rgb(252, 251, 251);
     border-radius: 2rem;
   }
+
   progress::-webkit-progress-value {
     background-color: var(--primary);
     border-radius: 2rem;
@@ -471,10 +493,12 @@
     font-weight: 700;
     transition-duration: 300ms;
   }
+
   button:hover {
     background-color: var(--primary-dark);
     transition-duration: 300ms;
   }
+
   button:disabled {
     border: 1px solid #999999;
     background-color: #cccccc;
@@ -505,9 +529,11 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
     transition-duration: 300ms;
   }
+
   button.ballot {
     padding: 2px 10px;
   }
+
   #text {
     border: 1px solid white;
     border-radius: 2rem;
