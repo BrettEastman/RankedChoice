@@ -420,7 +420,7 @@
     <p
       class="text-sm max-w-max bg-white font-bold rounded-full px-5 py-2 hover:shadow-[rgba(0,_0,_0,_0.24)_0px_2px_2px] duration-300"
     >
-      <a href="https://www.brettaustineastman.com/" target="_blank"
+      <a href="https://www.bretteastman.dev" target="_blank"
         >Brett Austin Eastman</a
       >
     </p>
