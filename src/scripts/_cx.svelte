@@ -1,6 +1,7 @@
-<script context="module">
+<script lang="ts" context="module">
   var hasOwn = {}.hasOwnProperty;
-  export function _cx() {
+
+  export function _cx(...args: any[]): string {
     var classes = [];
 
     for (var i = 0; i < arguments.length; i++) {
@@ -13,7 +14,7 @@
         classes.push(arg);
       } else if (Array.isArray(arg)) {
         if (arg.length) {
-          var inner = _cx.apply(null, arg);
+          var inner: string = _cx.apply(null, arg as []);
           if (inner) {
             classes.push(inner);
           }
@@ -40,7 +41,7 @@
 </script>
 
 <!--
-@component
+Description:
 A simple utility for conditionally joining classNames together, similar to the npm package named 'classnames'; This version is based on the Woodshed version.
 Usage examples
 ```js
